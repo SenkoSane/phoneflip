@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Fraunces", Georgia, serif;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
+body {
+  margin: 0;
+  background: #0c0b0a;
+  color: #e7e5e4;
+  touch-action: manipulation;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+}
+
+.ticket-card {
+  background-image: radial-gradient(circle at 0 12px, #0c0b0a 6px, transparent 7px),
+    radial-gradient(circle at 0 calc(100% - 12px), #0c0b0a 6px, transparent 7px);
+}
+
+.kanban-scroller {
+  gap: 0.75rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: 1rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.kanban-col {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  min-width: 15rem;
+  max-width: 22.5rem;
+  scroll-snap-align: start;
+}
+
+.kanban-sink {
+  box-sizing: border-box;
+  flex: 0 0 11rem;
+  max-width: 14rem;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.money {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
