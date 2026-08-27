@@ -4,6 +4,7 @@ import { useT } from '../i18n'
 import { totals } from '../lib/calc'
 import { euroSigned } from '../lib/format'
 import { useStore } from '../store'
+import { JanChat } from './JanChat'
 import { useSync } from './SyncProvider'
 import { euroClass } from '../ui'
 
@@ -142,6 +143,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </main>
         </div>
       </div>
+      <JanChat />
     </div>
   )
 }

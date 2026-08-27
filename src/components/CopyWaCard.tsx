@@ -2,7 +2,15 @@ import { useState } from 'react'
 import { useT } from '../i18n'
 import { GhostButton } from '../ui'
 
-export function CopyWaCard({ title, body }: { title: string; body: string }) {
+export function CopyWaCard({
+  title,
+  body,
+  className = '',
+}: {
+  title: string
+  body: string
+  className?: string
+}) {
   const t = useT()
   const [copied, setCopied] = useState(false)
 
@@ -21,9 +29,9 @@ export function CopyWaCard({ title, body }: { title: string; body: string }) {
   }
 
   return (
-    <li className="min-w-0 rounded-xl border border-white/10 bg-white/3 p-3">
+    <li className={`flex min-w-0 flex-col rounded-2xl border border-white/10 bg-black/20 p-3.5 sm:p-4 ${className}`}>
       <p className="text-sm font-medium text-stone-100">{title}</p>
-      <p className="mt-2 min-w-0 break-words text-sm text-stone-300">{body}</p>
+      <p className="mt-2 min-w-0 whitespace-pre-wrap break-words text-sm text-stone-300">{body}</p>
       <div className="mt-3 grid grid-cols-2 gap-2">
         <GhostButton type="button" className="w-full" onClick={() => void copy()}>
           {copied ? t('common.copied') : t('common.copy')}

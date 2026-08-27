@@ -370,80 +370,65 @@ const nl: Record<string, string> = {
   'coach.imeiHint': 'Voor je betaalt:',
   'buyask.title': 'Berichten aan verkopers',
   'buyask.intro':
-    'Jij haalt niks op — alles gaat per post. Koop alleen als accu, behuizing, IMEI, serienummer en Zoek mijn kloppen. Goedkoop is geen winst als het toestel niks waard is.',
-  'buyask.must1': 'Accugezondheid: screenshot Instellingen → Batterij → Batterijconditie (percentage).',
-  'buyask.must2': 'IMEI (*#06#) én Apple-serienummer (Instellingen → Algemeen → Info).',
-  'buyask.must3': 'Zoek mijn / iCloud uit, met screenshot. Slot = niet kopen, ook cadeau.',
-  'buyask.must4': 'Foto’s in volgorde: voorkant scherm AAN, achterkant, links, rechts, poort, schade close-up.',
-  'buyask.must5': 'Geen waterschade, geen Face ID stuk. Jij hebt geen vervoer: terugsturen is duur.',
-  'buyask.must6': 'Behuizing: krassen, deukjes, verbogen frame. Close-ups van alle kanten vóór je betaalt.',
+    'Jij haalt niks op — alles gaat per post. Zes berichten: begin, alle checks, eerste bod, max, onderdelen, vriendelijk nee.',
   'buyask.imeiLink': 'IMEI checken vóór je betaalt:',
-  'buyask.skipBanner': 'Dit toestel is een skip. Gebruik de “nee”-berichten — niet bieden.',
+  'buyask.skipBanner': 'Dit toestel is een skip. Gebruik Afwijzing — niet bieden.',
+  'buyask.minFallback': '€ …',
   'buyask.maxFallback': 'mijn max',
+  'buyask.partsFallback': 'onderdelen + werk',
   'buyask.deviceFallback': 'iPhone',
-  'buyask.g.check': 'Eerst checken (voor je betaalt)',
-  'buyask.g.deal': 'Bod en verzenden',
-  'buyask.g.no': 'Vriendelijk nee',
-  'buyask.q.still': 'Staat hij nog?',
-  'buyask.q.pack': 'Alle foto’s',
-  'buyask.q.battery': 'Accu',
-  'buyask.q.housing': 'Behuizing',
-  'buyask.q.ids': 'IMEI + serienummer',
-  'buyask.q.findmy': 'Zoek mijn',
-  'buyask.q.functions': 'Face ID / water',
-  'buyask.q.offer': 'Bod',
-  'buyask.q.hold': 'Eerst check, dan betalen',
-  'buyask.q.noPhotos': 'Geen foto’s / IMEI',
-  'buyask.q.noIcloud': 'iCloud-slot',
-  'buyask.q.noWater': 'Waterschade',
-  'buyask.q.noFaceid': 'Face ID stuk',
-  'buyask.q.thanksNo': 'Toch niet',
-  'buyask.m.still':
+  'buyask.q.begin': 'Begin',
+  'buyask.q.checks': 'Alle checks',
+  'buyask.q.offerMin': 'Eerste bod',
+  'buyask.q.offerMax': 'Tweede bod',
+  'buyask.q.parts': 'Onderdelen / fixen',
+  'buyask.q.reject': 'Afwijzing',
+  'buyask.m.begin':
     'Hoi, staat de {model} nog? Ik kan niet ophalen, alleen verzenden (ik betaal de verzending, track & trace).',
-  'buyask.m.pack':
-    'Kun je foto’s sturen in deze volgorde? 1 voorkant scherm AAN (heel toestel), 2 achterkant, 3 links, 4 rechts, 5 onderkant/poort, 6 accugezondheid, 7 close-up van krassen/deukjes. Zonder die set koop ik niet — ik koop op afstand.',
-  'buyask.m.battery':
-    'Wat is de accugezondheid in %? Graag een screenshot: Instellingen → Batterij → Batterijconditie. Maximale capaciteit moet in beeld.',
-  'buyask.m.housing':
-    'Hoe is de behuizing? Krassen, deukjes, verbogen frame of losse achterkant? Graag close-ups van alle kanten. Een licht deukje is oké; zwaar verbogen koop ik niet — ik koop op afstand.',
-  'buyask.m.ids':
-    'Kun je de IMEI (*#06# in de bel-app) én het serienummer sturen (Instellingen → Algemeen → Info)? Ik check die bij Apple vóór ik betaal.',
-  'buyask.m.findmy':
-    'Staat Zoek mijn iPhone uit? Graag een screenshot: Instellingen → [jouw naam] → Zoek mijn. Met iCloud-slot / “Zoek mijn aan” koop ik niet.',
-  'buyask.m.functions':
-    'Werkt Face ID? Laadt hij normaal? Waterschade of rode vochtindicator? Face ID stuk of vocht laat ik liggen.',
-  'buyask.m.offer':
-    'Als IMEI, Zoek mijn en accu kloppen kan ik {max} bieden. Verzenden naar {city}, ik betaal de verzending, wel track & trace. Eerst de checks, daarna betaal ik.',
-  'buyask.m.hold':
-    'Top. Stuur IMEI + serienummer + accu-screenshot. Als Apple-check en Zoek mijn kloppen, betaal ik en stuur je hem op met track & trace. Niet vooruit betalen zonder check.',
-  'buyask.m.noPhotos':
-    'Zonder die foto’s, accu-screenshot en IMEI kan ik hem niet nemen — sorry, ik koop alleen op afstand.',
-  'buyask.m.noIcloud':
-    'Dan laat ik hem liggen. iCloud / Zoek mijn is voor mij een no-go, ook als hij goedkoop is.',
-  'buyask.m.noWater':
-    'Waterschade is te riskant (vooral met verzenden). Dan hoeft het voor mij niet. Dank je wel.',
-  'buyask.m.noFaceid':
-    'Face ID stuk laat ik als beginner liggen. Succes met verkopen, dank je wel.',
-  'buyask.m.thanksNo':
-    'Toch niet, dank je wel voor de info. Succes met verkopen.',
+  'buyask.m.checks':
+    'Kun je dit even checken? Ik koop alleen op afstand (verzenden).\n\n1. Foto’s, in deze volgorde:\n- voorkant, scherm AAN (heel toestel)\n- achterkant\n- links\n- rechts\n- onderkant / poort\n- accugezondheid\n- close-up van krassen/deukjes\n\n2. Accu: hoeveel %? Screenshot: Instellingen → Batterij → Batterijconditie. Maximale capaciteit moet in beeld.\n\n3. Behuizing: krassen, deukjes, verbogen frame of losse achterkant? Graag close-ups van alle kanten.\n\n4. IMEI (*#06# in de bel-app) én serienummer (Instellingen → Algemeen → Info).\n\n5. Zoek mijn uit? Screenshot: Instellingen → [jouw naam] → Zoek mijn. Met iCloud-slot / “Zoek mijn aan” koop ik niet.\n\n6. Werkt Face ID? Laadt hij normaal? Waterschade of rode vochtindicator? Face ID stuk of vocht laat ik liggen.',
+  'buyask.m.offerMin':
+    'Als IMEI, Zoek mijn en accu kloppen kan ik {min} bieden. Alleen verzenden, ik betaal de verzending (track & trace).',
+  'buyask.m.offerMax':
+    'Ik kan tot {max} gaan. Alleen verzenden, ik betaal de verzending (track & trace).',
+  'buyask.m.parts':
+    'Ik moet onderdelen kopen om hem te fixen ({parts}), daarom kan ik {min} bieden. Alleen verzenden, ik betaal de verzending (track & trace).',
+  'buyask.m.reject':
+    'Helaas, te duur voor mij — het loont niet. Dank je wel, succes met verkopen.',
   'msg.kicker': 'WhatsApp',
   'msg.title': 'Berichten',
   'msg.intro':
-    'Klaar om te plakken. Inkopen: naar verkopers, van eerste contact tot bod of vriendelijk nee. Verkopen: antwoorden aan kopers.',
+    'Klaar om te plakken. Inkopen: 6 berichten — begin, alle checks, eerste bod, max, onderdelen, vriendelijk nee. Verkopen: antwoorden aan kopers.',
   'msg.tabBuy': 'Inkopen',
   'msg.tabSell': 'Verkopen',
   'msg.sellHint':
     'Zelfde antwoorden als bij Te koop. Vul zelf de vraagprijs in, of open een toestel in de studio.',
-  'msg.teaser': 'Accu, behuizing, IMEI, serial, Zoek mijn — klaar om te plakken.',
+  'msg.teaser': '6 berichten: begin, checks, eerste bod, max, onderdelen, nee.',
   'msg.teaserSell': 'Antwoorden aan kopers: staat hij nog, prijs, ophalen, accu.',
   'msg.teaserGo': 'Alle berichten',
   'msg.askPh': '€ …',
+  'msg.minLabel': 'Eerste bod (€)',
   'msg.maxLabel': 'Jouw max (€)',
+  'msg.partsLabel': 'Onderdelen-kosten (€, optioneel)',
   'msg.aiTitle': 'Bericht herschrijven',
   'msg.aiHint': 'Plak een concept. AI maakt het korter en vriendelijk — geen extra prijzen.',
   'msg.aiPh': 'Plak hier je conceptbericht…',
   'msg.aiGo': 'Herschrijf',
   'msg.allReplies': 'Alle kopersberichten',
+  'jan.open': 'Jan, mentor',
+  'jan.close': 'Sluiten',
+  'jan.title': 'Jan van der Mark',
+  'jan.name': 'Jan',
+  'jan.hint': 'Chat blijft op dit apparaat.',
+  'jan.empty':
+    'Stel een deal, toestel of risico voor. Eerst risico, dan winst — geen verzonnen live-prijzen.',
+  'jan.placeholder': 'Deal of risico…',
+  'jan.send': 'Stuur',
+  'jan.clear': 'Wissen',
+  'jan.thinking': 'Jan denkt na…',
+  'jan.error': 'Bericht lukte niet. Probeer opnieuw.',
+  'jan.needKey': 'OpenAI-key plakken op',
+  'jan.fromMsg': 'Jan staat rechtsonder — vraag hem over een deal.',
   'sell.assistToggle': 'Assistent',
 
   'coach.jobTitle': 'Beginner-advies deze klus',
@@ -1645,80 +1630,65 @@ const en: Record<string, string> = {
   'coach.imeiHint': 'Before you pay:',
   'buyask.title': 'Messages to sellers',
   'buyask.intro':
-    'You cannot pick up — everything ships. Only buy if battery, housing, IMEI, serial and Find My check out. Cheap is not profit if the phone is junk.',
-  'buyask.must1': 'Battery health: screenshot Settings → Battery → Battery Health (percentage).',
-  'buyask.must2': 'IMEI (*#06#) and Apple serial (Settings → General → About).',
-  'buyask.must3': 'Find My / iCloud off, with a screenshot. Lock = don’t buy, even if free.',
-  'buyask.must4': 'Photos in order: front screen ON, back, left, right, port, damage close-up.',
-  'buyask.must5': 'No water damage, no dead Face ID. You have no transport: returns are expensive.',
-  'buyask.must6': 'Housing: scratches, dents, bent frame. Close-ups of every side before you pay.',
+    'You cannot pick up — everything ships. Six messages: first contact, all checks, first bid, max, parts, a kind no.',
   'buyask.imeiLink': 'Check the IMEI before you pay:',
-  'buyask.skipBanner': 'This device is a skip. Use the “no” messages — don’t bid.',
+  'buyask.skipBanner': 'This device is a skip. Use Rejection — don’t bid.',
+  'buyask.minFallback': '€ …',
   'buyask.maxFallback': 'my max',
+  'buyask.partsFallback': 'parts + labour',
   'buyask.deviceFallback': 'iPhone',
-  'buyask.g.check': 'Check first (before you pay)',
-  'buyask.g.deal': 'Offer and shipping',
-  'buyask.g.no': 'A kind no',
-  'buyask.q.still': 'Still available?',
-  'buyask.q.pack': 'All photos',
-  'buyask.q.battery': 'Battery',
-  'buyask.q.housing': 'Housing',
-  'buyask.q.ids': 'IMEI + serial',
-  'buyask.q.findmy': 'Find My',
-  'buyask.q.functions': 'Face ID / water',
-  'buyask.q.offer': 'Offer',
-  'buyask.q.hold': 'Check first, then pay',
-  'buyask.q.noPhotos': 'No photos / IMEI',
-  'buyask.q.noIcloud': 'iCloud lock',
-  'buyask.q.noWater': 'Water damage',
-  'buyask.q.noFaceid': 'Face ID dead',
-  'buyask.q.thanksNo': 'No thanks',
-  'buyask.m.still':
+  'buyask.q.begin': 'Start',
+  'buyask.q.checks': 'All checks',
+  'buyask.q.offerMin': 'First bid',
+  'buyask.q.offerMax': 'Second bid',
+  'buyask.q.parts': 'Parts / repair',
+  'buyask.q.reject': 'Rejection',
+  'buyask.m.begin':
     'Hi, is the {model} still available? I cannot pick up, shipping only (I pay postage, track & trace).',
-  'buyask.m.pack':
-    'Could you send photos in this order? 1 front screen ON (full device), 2 back, 3 left, 4 right, 5 bottom/port, 6 battery health, 7 close-up of dents/scratches. Without that set I will not buy — I buy remotely.',
-  'buyask.m.battery':
-    'What is battery health in %? Please a screenshot: Settings → Battery → Battery Health. Maximum capacity in frame.',
-  'buyask.m.housing':
-    'How is the housing? Scratches, dents, bent frame or loose back? Please close-ups of every side. A light dent is fine; badly bent I will not buy — I buy remotely.',
-  'buyask.m.ids':
-    'Could you send the IMEI (*#06# in Phone) and the serial (Settings → General → About)? I check those with Apple before I pay.',
-  'buyask.m.findmy':
-    'Is Find My iPhone off? Please a screenshot: Settings → [your name] → Find My. I do not buy with iCloud lock / Find My on.',
-  'buyask.m.functions':
-    'Does Face ID work? Does it charge normally? Any water damage or red liquid indicator? Dead Face ID or moisture I skip.',
-  'buyask.m.offer':
-    'If IMEI, Find My and battery check out I can offer {max}. Ship to {city}, I pay postage, track & trace please. Checks first, then I pay.',
-  'buyask.m.hold':
-    'Great. Send IMEI + serial + battery screenshot. If Apple and Find My check out, I pay and you ship with track & trace. No payment before the check.',
-  'buyask.m.noPhotos':
-    'Without those photos, the battery screenshot and IMEI I cannot take it — sorry, I only buy remotely.',
-  'buyask.m.noIcloud':
-    'Then I will pass. iCloud / Find My is a no-go for me, even if it is cheap.',
-  'buyask.m.noWater':
-    'Water damage is too risky (especially with shipping). I will pass. Thank you.',
-  'buyask.m.noFaceid':
-    'Dead Face ID I skip as a beginner. Good luck selling, thank you.',
-  'buyask.m.thanksNo':
-    'I will pass after all, thanks for the info. Good luck selling.',
+  'buyask.m.checks':
+    'Could you check this? I only buy remotely (shipping).\n\n1. Photos, in this order:\n- front, screen ON (full device)\n- back\n- left\n- right\n- bottom / port\n- battery health\n- close-up of scratches/dents\n\n2. Battery: what %? Screenshot: Settings → Battery → Battery Health. Maximum capacity must be in frame.\n\n3. Housing: scratches, dents, bent frame or loose back? Please close-ups of every side.\n\n4. IMEI (*#06# in Phone) and serial (Settings → General → About).\n\n5. Find My off? Screenshot: Settings → [your name] → Find My. I do not buy with iCloud lock / Find My on.\n\n6. Does Face ID work? Does it charge normally? Water damage or red liquid indicator? Dead Face ID or moisture I skip.',
+  'buyask.m.offerMin':
+    'If IMEI, Find My and battery check out I can offer {min}. Shipping only, I pay postage (track & trace).',
+  'buyask.m.offerMax':
+    'I can go up to {max}. Shipping only, I pay postage (track & trace).',
+  'buyask.m.parts':
+    'I have to buy parts to fix it ({parts}), so I can offer {min}. Shipping only, I pay postage (track & trace).',
+  'buyask.m.reject':
+    'Unfortunately it is too expensive for me — not worth it. Thank you, good luck selling.',
   'msg.kicker': 'WhatsApp',
   'msg.title': 'Messages',
   'msg.intro':
-    'Ready to paste. Buying: to sellers, from first contact to offer or a kind no. Selling: replies to buyers.',
+    'Ready to paste. Buying: 6 messages — start, all checks, first bid, max, parts, a kind no. Selling: replies to buyers.',
   'msg.tabBuy': 'Buying',
   'msg.tabSell': 'Selling',
   'msg.sellHint':
     'Same replies as on For sale. Fill in the asking price yourself, or open a device in the studio.',
-  'msg.teaser': 'Battery, housing, IMEI, serial, Find My — ready to paste.',
+  'msg.teaser': '6 messages: start, checks, first bid, max, parts, no.',
   'msg.teaserSell': 'Replies to buyers: still available, price, pickup, battery.',
   'msg.teaserGo': 'All messages',
   'msg.askPh': '€ …',
+  'msg.minLabel': 'First bid (€)',
   'msg.maxLabel': 'Your max (€)',
+  'msg.partsLabel': 'Parts cost (€, optional)',
   'msg.aiTitle': 'Rewrite a message',
   'msg.aiHint': 'Paste a draft. AI makes it shorter and polite — no extra prices.',
   'msg.aiPh': 'Paste your draft message…',
   'msg.aiGo': 'Rewrite',
   'msg.allReplies': 'All buyer replies',
+  'jan.open': 'Jan, mentor',
+  'jan.close': 'Close',
+  'jan.title': 'Jan van der Mark',
+  'jan.name': 'Jan',
+  'jan.hint': 'Chat stays on this device. Jan answers in Dutch.',
+  'jan.empty':
+    'Ask about a deal, device or risk. Risk first, then profit — no made-up live prices.',
+  'jan.placeholder': 'Deal or risk…',
+  'jan.send': 'Send',
+  'jan.clear': 'Clear',
+  'jan.thinking': 'Jan is thinking…',
+  'jan.error': 'Message failed. Try again.',
+  'jan.needKey': 'Paste an OpenAI key on',
+  'jan.fromMsg': 'Jan is bottom-right — ask him about a deal.',
   'sell.assistToggle': 'Assistant',
 
   'coach.jobTitle': 'Beginner advice for this job',

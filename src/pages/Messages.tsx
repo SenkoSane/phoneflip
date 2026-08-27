@@ -9,23 +9,29 @@ import { GhostButton, TextArea, TextInput } from '../ui'
 
 type Kant = 'kopen' | 'verkopen'
 
+function parsePositive(text: string): number | null {
+  const n = Number(text.replace(',', '.'))
+  return Number.isFinite(n) && n > 0 ? n : null
+}
+
 export function Messages() {
   const t = useT()
   const [params, setParams] = useSearchParams()
   const kant: Kant = params.get('kant') === 'verkopen' ? 'verkopen' : 'kopen'
   const skip = params.get('skip') === '1'
   const [model, setModel] = useState(() => params.get('model') ?? '')
+  const [minText, setMinText] = useState(() => params.get('min') ?? '')
   const [maxText, setMaxText] = useState(() => params.get('max') ?? '')
+  const [partsText, setPartsText] = useState(() => params.get('parts') ?? '')
   const [draft, setDraft] = useState('')
   const [polished, setPolished] = useState('')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
   const hasKey = Boolean(readOpenAiKey())
 
-  const max = useMemo(() => {
-    const n = Number(maxText.replace(',', '.'))
-    return Number.isFinite(n) && n > 0 ? n : null
-  }, [maxText])
+  const min = useMemo(() => parsePositive(minText), [minText])
+  const max = useMemo(() => parsePositive(maxText), [maxText])
+  const parts = useMemo(() => parsePositive(partsText), [partsText])
 
   function setKant(next: Kant) {
     const q = new URLSearchParams(params)
@@ -55,6 +61,7 @@ export function Messages() {
         </p>
         <h2 className="font-display mt-1 text-2xl text-stone-50 sm:text-3xl">{t('msg.title')}</h2>
         <p className="mt-2 max-w-2xl min-w-0 break-words text-sm text-stone-400">{t('msg.intro')}</p>
+        <p className="mt-1 text-xs text-stone-500">{t('jan.fromMsg')}</p>
       </div>
 
       <div className="grid min-w-0 grid-cols-2 gap-2">
@@ -93,11 +100,33 @@ export function Messages() {
                 inputMode="decimal"
                 value={maxText}
                 onChange={(e) => setMaxText(e.target.value)}
-                placeholder={t('buyask.maxFallback')}
+                placeholder={t('msg.askPh')}
+              />
+            </label>
+            <label className="block min-w-0 space-y-1.5">
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+                {t('msg.minLabel')}
+              </span>
+              <TextInput
+                inputMode="decimal"
+                value={minText}
+                onChange={(e) => setMinText(e.target.value)}
+                placeholder={t('msg.askPh')}
+              />
+            </label>
+            <label className="block min-w-0 space-y-1.5">
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+                {t('msg.partsLabel')}
+              </span>
+              <TextInput
+                inputMode="decimal"
+                value={partsText}
+                onChange={(e) => setPartsText(e.target.value)}
+                placeholder={t('msg.askPh')}
               />
             </label>
           </div>
-          <SellerAskMessages model={model} max={max} skip={skip} />
+          <SellerAskMessages model={model} min={min} max={max} parts={parts} skip={skip} />
           <section className="min-w-0 rounded-2xl border border-white/8 bg-white/3 p-3 sm:p-4">
             <h3 className="text-sm font-medium text-stone-100">{t('msg.aiTitle')}</h3>
             <p className="mt-1 min-w-0 break-words text-sm text-stone-400">{t('msg.aiHint')}</p>

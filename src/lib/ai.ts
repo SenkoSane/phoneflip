@@ -1,3 +1,5 @@
+import { JAN_SYSTEM_PROMPT } from './janPrompt'
+
 const KEY = 'phoneflip.openai.sk'
 
 export function readOpenAiKey(): string {
@@ -226,6 +228,31 @@ export async function aiListingAssist(input: {
   const choice = (result as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message
     ?.content
   return (choice ?? '').trim()
+}
+
+export type JanTurn = { role: 'user' | 'assistant'; content: string }
+
+function choiceText(result: unknown): string {
+  return (
+    (result as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message
+      ?.content ?? ''
+  ).trim()
+}
+
+export async function aiJanChat(history: JanTurn[]): Promise<string> {
+  const result = await postAi({
+    model: 'gpt-4o-mini',
+    temperature: 0.4,
+    max_tokens: 900,
+    messages: [
+      { role: 'system', content: JAN_SYSTEM_PROMPT },
+      ...history.slice(-24).map((m) => ({
+        role: m.role,
+        content: m.content.slice(0, 4000),
+      })),
+    ],
+  })
+  return choiceText(result)
 }
 
 export function fileToJpegDataUrl(file: File, max = 1200, quality = 0.72): Promise<string> {
