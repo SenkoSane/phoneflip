@@ -2,7 +2,13 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { useT } from '../i18n'
-import { aiJanChat, readOpenAiKey, type JanTurn } from '../lib/ai'
+import {
+  AiRequestError,
+  aiJanChat,
+  resolveOpenAiKey,
+  type AiFailCode,
+  type JanTurn,
+} from '../lib/ai'
 import { uid } from '../lib/id'
 import { useStore } from '../store'
 
@@ -50,14 +56,15 @@ export function JanChat() {
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
   const workshopKey = data.workshop?.openaiKey?.trim() ?? ''
-  const [hasKey, setHasKey] = useState(() => Boolean(readOpenAiKey() || workshopKey))
+  const [hasKey, setHasKey] = useState(() => resolveOpenAiKey(workshopKey).startsWith('sk-'))
+  const [errCode, setErrCode] = useState<AiFailCode | ''>('')
 
   useEffect(() => {
     saveChat(msgs)
   }, [msgs])
 
   useEffect(() => {
-    setHasKey(Boolean(readOpenAiKey() || workshopKey))
+    setHasKey(resolveOpenAiKey(workshopKey).startsWith('sk-'))
   }, [open, workshopKey])
 
   useEffect(() => {
@@ -87,15 +94,25 @@ export function JanChat() {
     setDraft('')
     setBusy(true)
     setErr('')
+    setErrCode('')
     try {
       const history: JanTurn[] = next.map((m) => ({ role: m.role, content: m.content }))
-      const reply = await aiJanChat(history)
-      setMsgs((cur) => [
-        ...cur,
-        { id: uid(), role: 'assistant', content: reply || t('jan.error') },
-      ])
-    } catch {
-      setErr(t('jan.error'))
+      const reply = await aiJanChat(history, workshopKey)
+      setMsgs((cur) => [...cur, { id: uid(), role: 'assistant', content: reply }])
+    } catch (e) {
+      const code: AiFailCode = e instanceof AiRequestError ? e.code : 'fail'
+      setErrCode(code)
+      setErr(
+        code === 'no_key'
+          ? t('jan.errorNoKey')
+          : code === 'network'
+            ? t('jan.errorNetwork')
+            : code === 'auth'
+              ? t('jan.errorAuth')
+              : code === 'missing'
+                ? t('jan.errorMissing')
+                : t('jan.error'),
+      )
     } finally {
       setBusy(false)
     }
@@ -104,6 +121,7 @@ export function JanChat() {
   function clearChat() {
     setMsgs([])
     setErr('')
+    setErrCode('')
     saveChat([])
   }
 
@@ -187,7 +205,23 @@ export function JanChat() {
             </ul>
           )}
           {busy ? <p className="mt-2 text-xs text-stone-500">{t('jan.thinking')}</p> : null}
-          {err ? <p className="mt-2 text-sm text-rose-300">{err}</p> : null}
+          {err ? (
+            <p className="mt-2 text-sm text-rose-300">
+              {err}
+              {errCode === 'no_key' || errCode === 'auth' ? (
+                <>
+                  {' '}
+                  <Link
+                    to="/instellingen"
+                    onClick={() => setOpen(false)}
+                    className="underline underline-offset-2"
+                  >
+                    {t('nav.backup')}
+                  </Link>
+                </>
+              ) : null}
+            </p>
+          ) : null}
           {!hasKey ? (
             <p className="mt-3 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
               {t('jan.needKey')}{' '}

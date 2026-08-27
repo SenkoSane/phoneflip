@@ -29,6 +29,23 @@ export function syncOpenAiKeyFromWorkshop(openaiKey?: string | null) {
   if (openaiKey === '') writeOpenAiKey('')
 }
 
+export function resolveOpenAiKey(workshopKey?: string | null): string {
+  const fromLs = readOpenAiKey()
+  if (fromLs) return fromLs
+  return typeof workshopKey === 'string' ? workshopKey.trim() : ''
+}
+
+export type AiFailCode = 'no_key' | 'network' | 'auth' | 'missing' | 'fail'
+
+export class AiRequestError extends Error {
+  readonly code: AiFailCode
+  constructor(code: AiFailCode, detail = '') {
+    super(detail || code)
+    this.name = 'AiRequestError'
+    this.code = code
+  }
+}
+
 export type AiParse = {
   brand?: string
   model?: string
@@ -40,10 +57,35 @@ export type AiParse = {
   listing?: string
 }
 
-async function postAi(payload: unknown): Promise<unknown> {
-  const key = readOpenAiKey()
+function looksLikeHtml(res: Response, raw: string): boolean {
+  const ct = (res.headers.get('content-type') ?? '').toLowerCase()
+  if (ct.includes('text/html')) return true
+  const s = raw.trimStart().slice(0, 24).toLowerCase()
+  return s.startsWith('<!doctype') || s.startsWith('<html')
+}
+
+function failCode(status: number, err: string): AiFailCode {
+  const t = err.toLowerCase()
+  if (status === 401 || status === 403) return 'auth'
+  if (
+    t.includes('invalid_api_key') ||
+    t.includes('incorrect api key') ||
+    t.includes('unauthorized')
+  ) {
+    return 'auth'
+  }
+  if (status === 404 || t.includes('unsupported value')) return 'missing'
+  if (t.includes('no key')) return 'no_key'
+  return 'fail'
+}
+
+async function postAi(payload: unknown, workshopKey?: string | null): Promise<unknown> {
+  const key = resolveOpenAiKey(workshopKey)
+  if (!key.startsWith('sk-')) {
+    throw new AiRequestError('no_key')
+  }
   const urls = ['/api/openai', '/.netlify/functions/openai']
-  let lastErr = 'offline'
+  let last: AiRequestError = new AiRequestError('missing')
   for (const url of urls) {
     try {
       const res = await fetch(url, {
@@ -51,21 +93,28 @@ async function postAi(payload: unknown): Promise<unknown> {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, payload }),
       })
-      if (!res.ok) {
-        lastErr = `http ${res.status}`
+      const raw = await res.text()
+      if (looksLikeHtml(res, raw) || res.status === 404 || res.status === 405) {
+        last = new AiRequestError('missing')
         continue
       }
-      const json = (await res.json()) as { error?: string; result?: unknown }
-      if (json.error) {
-        lastErr = json.error
+      let json: { error?: string; result?: unknown } = {}
+      try {
+        json = JSON.parse(raw) as { error?: string; result?: unknown }
+      } catch {
+        last = new AiRequestError('fail', raw.slice(0, 120))
         continue
+      }
+      if (!res.ok || json.error) {
+        throw new AiRequestError(failCode(res.status, String(json.error ?? raw)), String(json.error ?? ''))
       }
       return json.result
-    } catch {
-      lastErr = 'network'
+    } catch (e) {
+      if (e instanceof AiRequestError) throw e
+      last = new AiRequestError('network')
     }
   }
-  throw new Error(lastErr)
+  throw last
 }
 
 function extractJson(text: string): AiParse {
@@ -248,20 +297,25 @@ function choiceText(result: unknown): string {
   ).trim()
 }
 
-export async function aiJanChat(history: JanTurn[]): Promise<string> {
-  const result = await postAi({
-    model: 'gpt-4o-mini',
-    temperature: 0.4,
-    max_tokens: 900,
-    messages: [
-      { role: 'system', content: JAN_SYSTEM_PROMPT },
-      ...history.slice(-24).map((m) => ({
-        role: m.role,
-        content: m.content.slice(0, 4000),
-      })),
-    ],
-  })
-  return choiceText(result)
+export async function aiJanChat(history: JanTurn[], workshopKey?: string | null): Promise<string> {
+  const result = await postAi(
+    {
+      model: 'gpt-4o-mini',
+      temperature: 0.4,
+      max_tokens: 900,
+      messages: [
+        { role: 'system', content: JAN_SYSTEM_PROMPT },
+        ...history.slice(-24).map((m) => ({
+          role: m.role,
+          content: m.content.slice(0, 4000),
+        })),
+      ],
+    },
+    workshopKey,
+  )
+  const text = choiceText(result)
+  if (!text) throw new AiRequestError('fail')
+  return text
 }
 
 export function fileToJpegDataUrl(file: File, max = 1200, quality = 0.72): Promise<string> {
