@@ -51,5 +51,5 @@ export default async (request) => {
 }
 
 export const config = {
-  path: '/api/openai',
+  path: ['/api/openai', '/.netlify/functions/openai'],
 }
