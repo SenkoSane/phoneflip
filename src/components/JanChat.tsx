@@ -9,6 +9,7 @@ import {
   type AiFailCode,
   type JanTurn,
 } from '../lib/ai'
+import { janShopFromData } from '../lib/janBriefing'
 import { uid } from '../lib/id'
 import { useStore } from '../store'
 
@@ -97,7 +98,7 @@ export function JanChat() {
     setErrCode('')
     try {
       const history: JanTurn[] = next.map((m) => ({ role: m.role, content: m.content }))
-      const reply = await aiJanChat(history, workshopKey)
+      const reply = await aiJanChat(history, workshopKey, janShopFromData(data))
       setMsgs((cur) => [...cur, { id: uid(), role: 'assistant', content: reply }])
     } catch (e) {
       const code: AiFailCode = e instanceof AiRequestError ? e.code : 'fail'

@@ -1,4 +1,5 @@
 import { JAN_SYSTEM_PROMPT } from './janPrompt'
+import { buildJanBriefing, type JanShopInput } from './janBriefing'
 
 const KEY = 'phoneflip.openai.sk'
 
@@ -297,15 +298,22 @@ function choiceText(result: unknown): string {
   ).trim()
 }
 
-export async function aiJanChat(history: JanTurn[], workshopKey?: string | null): Promise<string> {
+export async function aiJanChat(
+  history: JanTurn[],
+  workshopKey?: string | null,
+  shop?: JanShopInput | null,
+): Promise<string> {
+  const recent = history.slice(-24)
+  const briefing = buildJanBriefing(recent, shop)
   const result = await postAi(
     {
       model: 'gpt-4o-mini',
-      temperature: 0.4,
+      temperature: 0.3,
       max_tokens: 900,
       messages: [
         { role: 'system', content: JAN_SYSTEM_PROMPT },
-        ...history.slice(-24).map((m) => ({
+        { role: 'system', content: briefing },
+        ...recent.map((m) => ({
           role: m.role,
           content: m.content.slice(0, 4000),
         })),
