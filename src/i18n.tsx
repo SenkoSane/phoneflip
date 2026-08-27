@@ -307,9 +307,10 @@ const nl: Record<string, string> = {
   'settings.pwSame': 'Kies iets anders dan het huidige.',
   'settings.aiTitle': 'OpenAI (optioneel)',
   'settings.aiHint':
-    'Blijft op dit apparaat, niet in de cloud of backup. Nodig voor foto-herkenning en nettere Marktplaats-tekst. Plakken van een advertentie werkt ook zonder. Zet de key niet in de site-bestanden.',
+    'Blijft op dit apparaat — niet via de koppelcode. Plak de key één keer op de telefoon en één keer op de pc (Backup → opslaan). Nodig voor Jan en foto-hulp. Advertenties plakken werkt ook zonder.',
   'settings.aiKey': 'API-key',
   'settings.aiSave': 'Key opslaan',
+  'settings.aiOnDevice': 'Opgeslagen op dit apparaat. Op je andere telefoon of pc: opnieuw plakken.',
   'settings.counts':
     '{phones} toestellen · {jobs} reparaties · {quotes} offertes · {receipts} bonnen · {eq} apparatuur · {wish} wenslijst · {stock} losse onderdelen',
 
@@ -1567,9 +1568,10 @@ const en: Record<string, string> = {
   'settings.pwSame': 'Pick something different from the current one.',
   'settings.aiTitle': 'OpenAI (optional)',
   'settings.aiHint':
-    'Stays on this device, not in the cloud or backup. Needed for photo hints and cleaner Marktplaats copy. Pasting an ad works without it. Do not put the key in the site files.',
+    'Stays on this device — not via the pair code. Paste the key once on the phone and once on the PC (Backup → save). Needed for Jan and photo help. Pasting ads works without it.',
   'settings.aiKey': 'API key',
   'settings.aiSave': 'Save key',
+  'settings.aiOnDevice': 'Saved on this device. On your other phone or PC: paste it again.',
   'settings.counts':
     '{phones} devices · {jobs} repairs · {quotes} quotes · {receipts} receipts · {eq} equipment · {wish} wishlist · {stock} loose parts',
 

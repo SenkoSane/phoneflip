@@ -226,6 +226,9 @@ export function Settings() {
         <PrimaryButton type="submit" className="w-full sm:w-auto">
           {aiSaved ? t('common.saved') : t('settings.aiSave')}
         </PrimaryButton>
+        {readOpenAiKey() ? (
+          <p className="text-xs text-stone-500">{t('settings.aiOnDevice')}</p>
+        ) : null}
       </form>
 
       <DeviceSync />

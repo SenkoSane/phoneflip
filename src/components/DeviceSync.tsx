@@ -11,7 +11,7 @@ export function DeviceSync() {
 
   if (!sync.configured) {
     return (
-      <div className="space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
+      <div className="relative z-10 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
         <h3 className="text-sm font-medium text-stone-200">{t('sync.title')}</h3>
         <p className="text-sm text-stone-400">{t('sync.unconfigured')}</p>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-stone-400">
@@ -33,7 +33,7 @@ export function DeviceSync() {
   const shown = sync.code ?? sync.pendingCode
 
   return (
-    <div className="space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
+    <div className="relative z-10 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-stone-200">{t('sync.title')}</h3>
         <p className="text-xs text-stone-500">{t(`sync.${sync.status}`)}</p>

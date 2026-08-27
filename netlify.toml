@@ -3,10 +3,11 @@
   publish = "dist"
 
 # Smart detection flags Google's sample AIza… key in Firebase SDK .d.ts (node_modules)
-# and the public Firebase web API key Vite inlines into dist. Keep scanning on.
+# and the public Firebase web API key in src + dist. Keep scanning on.
 [build.environment]
-  SECRETS_SCAN_OMIT_PATHS = "node_modules,dist"
+  SECRETS_SCAN_OMIT_PATHS = "node_modules,dist,src/lib/firebase.ts"
   SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY"
+  SECRETS_SCAN_SMART_DETECTION_OMIT_VALUES = "AIzaSyA56QVHzNFQjwXXgAPgCq76R-H96wkM1ao"
 
 [functions]
   directory = "netlify/functions"

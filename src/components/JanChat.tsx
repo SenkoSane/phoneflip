@@ -109,7 +109,7 @@ export function JanChat() {
       type="button"
       onClick={() => setOpen(true)}
       aria-label={t('jan.open')}
-      className="fixed z-40 flex size-12 items-center justify-center rounded-full bg-amber-500 text-[13px] font-bold leading-none text-stone-950 shadow-lg shadow-black/40 hover:bg-amber-400 right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] sm:right-6 sm:bottom-8 lg:bottom-6"
+      className="pointer-events-auto fixed z-30 flex size-12 items-center justify-center rounded-full bg-amber-500 text-[13px] font-bold leading-none text-stone-950 shadow-lg shadow-black/40 hover:bg-amber-400 right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] sm:right-6 sm:bottom-8 lg:bottom-6"
     >
       J
     </button>
