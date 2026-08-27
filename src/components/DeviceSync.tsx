@@ -11,9 +11,10 @@ export function DeviceSync() {
 
   if (!sync.configured) {
     return (
-      <div className="relative z-10 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
+      <div className="relative z-40 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
         <h3 className="text-sm font-medium text-stone-200">{t('sync.title')}</h3>
         <p className="text-sm text-stone-400">{t('sync.unconfigured')}</p>
+        <p className="text-sm text-stone-400">{t('sync.aiKey')}</p>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-stone-400">
           <li>{t('sync.step1')}</li>
           <li>{t('sync.step2')}</li>
@@ -33,12 +34,13 @@ export function DeviceSync() {
   const shown = sync.code ?? sync.pendingCode
 
   return (
-    <div className="relative z-10 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
+    <div className="relative z-40 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="text-sm font-medium text-stone-200">{t('sync.title')}</h3>
         <p className="text-xs text-stone-500">{t(`sync.${sync.status}`)}</p>
       </div>
       <p className="text-sm text-stone-400">{t('sync.hint')}</p>
+      <p className="text-sm text-stone-400">{t('sync.aiKey')}</p>
 
       {shown ? (
         <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3">

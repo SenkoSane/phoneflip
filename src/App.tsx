@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { SyncProvider } from './components/SyncProvider'
 import { useI18n } from './i18n'
+import { syncOpenAiKeyFromWorkshop } from './lib/ai'
 import { syncCustomGateHash } from './lib/gate'
 import { useStore } from './store'
 import { Books } from './pages/Books'
@@ -37,6 +38,9 @@ function LangSync() {
   useEffect(() => {
     syncCustomGateHash(data.workshop?.passwordHash)
   }, [data.workshop?.passwordHash])
+  useEffect(() => {
+    syncOpenAiKeyFromWorkshop(data.workshop?.openaiKey)
+  }, [data.workshop?.openaiKey])
   return null
 }
 

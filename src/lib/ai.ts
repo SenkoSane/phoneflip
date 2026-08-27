@@ -20,6 +20,15 @@ export function writeOpenAiKey(value: string) {
   }
 }
 
+/** Keep Jan working from localStorage after Firebase pairing copies the workshop. */
+export function syncOpenAiKeyFromWorkshop(openaiKey?: string | null) {
+  if (typeof openaiKey === 'string' && openaiKey.trim()) {
+    writeOpenAiKey(openaiKey)
+    return
+  }
+  if (openaiKey === '') writeOpenAiKey('')
+}
+
 export type AiParse = {
   brand?: string
   model?: string

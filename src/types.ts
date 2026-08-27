@@ -241,6 +241,7 @@ export type WorkshopProfile = {
   email: string
   locale?: 'nl' | 'en'
   passwordHash?: string
+  openaiKey?: string
   updatedAt: string
 }
 

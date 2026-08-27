@@ -307,10 +307,10 @@ const nl: Record<string, string> = {
   'settings.pwSame': 'Kies iets anders dan het huidige.',
   'settings.aiTitle': 'OpenAI (optioneel)',
   'settings.aiHint':
-    'Blijft op dit apparaat — niet via de koppelcode. Plak de key één keer op de telefoon en één keer op de pc (Backup → opslaan). Nodig voor Jan en foto-hulp. Advertenties plakken werkt ook zonder.',
+    'Sla de key één keer op. Hij gaat mee met de koppelcode naar telefoon en pc. Listing-foto’s blijven alleen op dit apparaat.',
   'settings.aiKey': 'API-key',
   'settings.aiSave': 'Key opslaan',
-  'settings.aiOnDevice': 'Opgeslagen op dit apparaat. Op je andere telefoon of pc: opnieuw plakken.',
+  'settings.aiOnDevice': 'Opgeslagen. Gekoppelde telefoon en pc krijgen dezelfde key via de koppelcode.',
   'settings.counts':
     '{phones} toestellen · {jobs} reparaties · {quotes} offertes · {receipts} bonnen · {eq} apparatuur · {wish} wenslijst · {stock} losse onderdelen',
 
@@ -387,7 +387,7 @@ const nl: Record<string, string> = {
   'buyask.m.begin':
     'Hoi, staat de {model} nog? Ik kan niet ophalen, alleen verzenden (ik betaal de verzending, track & trace).',
   'buyask.m.checks':
-    'Kun je dit even checken? Ik koop alleen op afstand (verzenden).\n\n1. Foto’s, in deze volgorde:\n- voorkant, scherm AAN (heel toestel)\n- achterkant\n- links\n- rechts\n- onderkant / poort\n- accugezondheid\n- close-up van krassen/deukjes\n\n2. Accu: hoeveel %? Screenshot: Instellingen → Batterij → Batterijconditie. Maximale capaciteit moet in beeld.\n\n3. Behuizing: krassen, deukjes, verbogen frame of losse achterkant? Graag close-ups van alle kanten.\n\n4. IMEI (*#06# in de bel-app) én serienummer (Instellingen → Algemeen → Info).\n\n5. Zoek mijn uit? Screenshot: Instellingen → [jouw naam] → Zoek mijn. Met iCloud-slot / “Zoek mijn aan” koop ik niet.\n\n6. Werkt Face ID? Laadt hij normaal? Waterschade of rode vochtindicator? Face ID stuk of vocht laat ik liggen.',
+    'Hoi, ik koop op afstand (alleen verzenden). Kun je dit sturen?\n\nAccu % (screenshot Batterijconditie)\nIMEI (*#06#) + serienummer (Instellingen → Info)\nZoek mijn uit (screenshot)\nFace ID ok? Laadt hij? Waterschade?\n2 foto’s: voorkant scherm AAN + achterkant (en close-up bij krassen/deukjes)\n\nMet iCloud-slot, Face ID stuk of vocht koop ik niet. Alvast bedankt!',
   'buyask.m.offerMin':
     'Als IMEI, Zoek mijn en accu kloppen kan ik {min} bieden. Alleen verzenden, ik betaal de verzending (track & trace).',
   'buyask.m.offerMax':
@@ -458,6 +458,7 @@ const nl: Record<string, string> = {
   'sync.copy': 'Kopieer code',
   'sync.copied': 'Gekopieerd',
   'sync.hint': 'Zet de site online en open dezelfde URL op telefoon en pc. Dezelfde koppelcode = dezelfde data.',
+  'sync.aiKey': 'De OpenAI-key gaat mee met deze koppelcode (telefoon + pc). Listing-foto’s niet.',
   'sync.conflict': 'Deze browser heeft andere data dan de cloud. Wat wil je bewaren?',
   'sync.useCloud': 'Overschrijven met cloud',
   'sync.useLocal': 'Cloud vervangen met dit apparaat',
@@ -1568,10 +1569,10 @@ const en: Record<string, string> = {
   'settings.pwSame': 'Pick something different from the current one.',
   'settings.aiTitle': 'OpenAI (optional)',
   'settings.aiHint':
-    'Stays on this device — not via the pair code. Paste the key once on the phone and once on the PC (Backup → save). Needed for Jan and photo help. Pasting ads works without it.',
+    'Save the key once. It travels with the pairing code to phone and PC. Listing photos stay on this device only.',
   'settings.aiKey': 'API key',
   'settings.aiSave': 'Save key',
-  'settings.aiOnDevice': 'Saved on this device. On your other phone or PC: paste it again.',
+  'settings.aiOnDevice': 'Saved. Linked phone and PC get the same key via the pairing code.',
   'settings.counts':
     '{phones} devices · {jobs} repairs · {quotes} quotes · {receipts} receipts · {eq} equipment · {wish} wishlist · {stock} loose parts',
 
@@ -1648,7 +1649,7 @@ const en: Record<string, string> = {
   'buyask.m.begin':
     'Hi, is the {model} still available? I cannot pick up, shipping only (I pay postage, track & trace).',
   'buyask.m.checks':
-    'Could you check this? I only buy remotely (shipping).\n\n1. Photos, in this order:\n- front, screen ON (full device)\n- back\n- left\n- right\n- bottom / port\n- battery health\n- close-up of scratches/dents\n\n2. Battery: what %? Screenshot: Settings → Battery → Battery Health. Maximum capacity must be in frame.\n\n3. Housing: scratches, dents, bent frame or loose back? Please close-ups of every side.\n\n4. IMEI (*#06# in Phone) and serial (Settings → General → About).\n\n5. Find My off? Screenshot: Settings → [your name] → Find My. I do not buy with iCloud lock / Find My on.\n\n6. Does Face ID work? Does it charge normally? Water damage or red liquid indicator? Dead Face ID or moisture I skip.',
+    'Hi, I buy remotely (shipping only). Could you send this?\n\nBattery % (screenshot Battery Health)\nIMEI (*#06#) + serial (Settings → About)\nFind My off (screenshot)\nFace ID ok? Does it charge? Water damage?\n2 photos: front screen ON + back (and a close-up if there are scratches/dents)\n\nI don’t buy with iCloud lock, broken Face ID or moisture. Thanks!',
   'buyask.m.offerMin':
     'If IMEI, Find My and battery check out I can offer {min}. Shipping only, I pay postage (track & trace).',
   'buyask.m.offerMax':
@@ -1719,6 +1720,7 @@ const en: Record<string, string> = {
   'sync.copy': 'Copy code',
   'sync.copied': 'Copied',
   'sync.hint': 'Put the site online and open the same URL on phone and PC. Same code = same data.',
+  'sync.aiKey': 'The OpenAI key travels with this pairing code (phone + PC). Listing photos do not.',
   'sync.conflict': 'This browser has different data than the cloud. What do you want to keep?',
   'sync.useCloud': 'Overwrite with cloud',
   'sync.useLocal': 'Replace cloud with this device',

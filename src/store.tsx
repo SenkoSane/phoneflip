@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react'
+import { readOpenAiKey, writeOpenAiKey } from './lib/ai'
 import { linesFromQuote, quoteTotal } from './lib/docs'
 import { parseEuro } from './lib/format'
 import { nextTicketNr, today, uid } from './lib/id'
@@ -363,17 +364,44 @@ function normalizeWorkshop(raw: unknown): WorkshopProfile {
       typeof w.passwordHash === 'string' && /^[0-9a-f]{64}$/.test(w.passwordHash)
         ? w.passwordHash
         : undefined,
+    openaiKey: normalizeOpenAiKey(w.openaiKey),
     updatedAt: str(w.updatedAt),
   }
+}
+
+function normalizeOpenAiKey(raw: unknown): string | undefined {
+  if (typeof raw !== 'string') return undefined
+  const trimmed = raw.trim().slice(0, 512)
+  return trimmed || ''
 }
 
 function load(): AppData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return emptyData
-    return normalize(JSON.parse(raw) as Partial<AppData>)
+    if (!raw) return liftOpenAiKey(emptyData)
+    return liftOpenAiKey(normalize(JSON.parse(raw) as Partial<AppData>))
   } catch {
-    return emptyData
+    return liftOpenAiKey(emptyData)
+  }
+}
+
+/** Workshop key → localStorage (Jan). Existing localStorage key → workshop so pairing can push it. */
+function liftOpenAiKey(data: AppData): AppData {
+  const w = data.workshop ?? EMPTY_WORKSHOP
+  const fromWorkshop = typeof w.openaiKey === 'string' ? w.openaiKey.trim() : ''
+  if (fromWorkshop) {
+    writeOpenAiKey(fromWorkshop)
+    return data
+  }
+  if (w.openaiKey === '') {
+    writeOpenAiKey('')
+    return data
+  }
+  const fromLs = readOpenAiKey()
+  if (!fromLs) return data
+  return {
+    ...data,
+    workshop: { ...w, openaiKey: fromLs },
   }
 }
 
@@ -911,6 +939,10 @@ function reducer(state: AppData, action: Action): AppData {
         workshop: normalizeWorkshop({
           ...action.workshop,
           passwordHash: action.workshop.passwordHash ?? state.workshop?.passwordHash,
+          openaiKey:
+            action.workshop.openaiKey !== undefined
+              ? action.workshop.openaiKey
+              : state.workshop?.openaiKey,
           updatedAt: new Date().toISOString(),
         }),
       }

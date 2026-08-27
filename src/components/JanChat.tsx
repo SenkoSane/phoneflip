@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useT } from '../i18n'
 import { aiJanChat, readOpenAiKey, type JanTurn } from '../lib/ai'
 import { uid } from '../lib/id'
+import { useStore } from '../store'
 
 const CHAT_KEY = 'phoneflip.jan.chat'
 const MAX_STORE = 80
@@ -39,6 +40,7 @@ function saveChat(msgs: Msg[]) {
 
 export function JanChat() {
   const t = useT()
+  const { data } = useStore()
   const titleId = useId()
   const listRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -47,15 +49,16 @@ export function JanChat() {
   const [msgs, setMsgs] = useState<Msg[]>(loadChat)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
-  const [hasKey, setHasKey] = useState(() => Boolean(readOpenAiKey()))
+  const workshopKey = data.workshop?.openaiKey?.trim() ?? ''
+  const [hasKey, setHasKey] = useState(() => Boolean(readOpenAiKey() || workshopKey))
 
   useEffect(() => {
     saveChat(msgs)
   }, [msgs])
 
   useEffect(() => {
-    if (open) setHasKey(Boolean(readOpenAiKey()))
-  }, [open])
+    setHasKey(Boolean(readOpenAiKey() || workshopKey))
+  }, [open, workshopKey])
 
   useEffect(() => {
     if (!open) return

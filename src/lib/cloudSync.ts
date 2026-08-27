@@ -236,6 +236,10 @@ export function nestedFingerprint(data: AppData): string {
     for (const l of r.lines ?? []) parts.push(`rl:${l.id}`)
   }
   for (const id of data.deletedIds ?? []) parts.push(`d:${id}`)
+  const w = data.workshop
+  parts.push(
+    `ws:${w?.updatedAt ?? ''}:${w?.passwordHash ? '1' : '0'}:${w?.openaiKey?.trim() ? '1' : w?.openaiKey === '' ? 'x' : '0'}`,
+  )
   return parts.sort().join(',')
 }
 
@@ -294,9 +298,26 @@ function pickNewerWorkshop(
     else picked = a ?? b
   }
   if (!picked) return undefined
-  if (picked.passwordHash) return picked
-  const hash = a?.passwordHash || b?.passwordHash
-  return hash ? { ...picked, passwordHash: hash } : picked
+  let next = picked
+  if (!next.passwordHash) {
+    const hash = a?.passwordHash || b?.passwordHash
+    if (hash) next = { ...next, passwordHash: hash }
+  }
+  const openaiKey = pickOpenAiKey(next, a, b)
+  return openaiKey !== undefined ? { ...next, openaiKey } : next
+}
+
+function pickOpenAiKey(
+  picked: WorkshopProfile,
+  a?: WorkshopProfile | null,
+  b?: WorkshopProfile | null,
+): string | undefined {
+  const trim = (v?: string) => (typeof v === 'string' ? v.trim() : '')
+  const pickedTrim = trim(picked.openaiKey)
+  if (pickedTrim) return pickedTrim
+  if (picked.openaiKey === '') return ''
+  const other = trim(a?.openaiKey) || trim(b?.openaiKey)
+  return other || undefined
 }
 
 export function sanitizeForFirebase<T>(value: T): T {

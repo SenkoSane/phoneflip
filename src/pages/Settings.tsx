@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DeviceSync } from '../components/DeviceSync'
 import { useI18n } from '../i18n'
 import { readOpenAiKey, writeOpenAiKey } from '../lib/ai'
@@ -26,8 +26,13 @@ export function Settings() {
   const [confirmPw, setConfirmPw] = useState('')
   const [pwError, setPwError] = useState('')
   const [pwSaved, setPwSaved] = useState(false)
-  const [aiKey, setAiKey] = useState(() => readOpenAiKey())
+  const [aiKey, setAiKey] = useState(() => readOpenAiKey() || w.openaiKey || '')
   const [aiSaved, setAiSaved] = useState(false)
+
+  useEffect(() => {
+    const incoming = w.openaiKey
+    if (typeof incoming === 'string' && incoming.trim()) setAiKey(incoming)
+  }, [w.openaiKey])
 
   function download() {
     const blob = new Blob(
@@ -66,6 +71,7 @@ export function Settings() {
       email: email.trim(),
       locale: lang,
       passwordHash: w.passwordHash,
+      openaiKey: w.openaiKey,
       updatedAt: new Date().toISOString(),
     }
     setWorkshop(next)
@@ -140,6 +146,7 @@ export function Settings() {
                   ...(data.workshop ?? EMPTY_WORKSHOP),
                   locale: code,
                   passwordHash: w.passwordHash,
+                  openaiKey: w.openaiKey,
                 })
               }}
             >
@@ -202,9 +209,16 @@ export function Settings() {
       </form>
 
       <form
-        className="space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5"
+        className="relative z-40 space-y-3 rounded-2xl border border-white/8 bg-white/3 p-5"
         onSubmit={onSubmit(() => {
-          writeOpenAiKey(aiKey)
+          const trimmed = aiKey.trim()
+          writeOpenAiKey(trimmed)
+          setWorkshop({
+            ...(data.workshop ?? EMPTY_WORKSHOP),
+            locale: lang,
+            passwordHash: w.passwordHash,
+            openaiKey: trimmed,
+          })
           setAiSaved(true)
           window.setTimeout(() => setAiSaved(false), 2000)
         })}
@@ -226,7 +240,7 @@ export function Settings() {
         <PrimaryButton type="submit" className="w-full sm:w-auto">
           {aiSaved ? t('common.saved') : t('settings.aiSave')}
         </PrimaryButton>
-        {readOpenAiKey() ? (
+        {readOpenAiKey() || w.openaiKey?.trim() ? (
           <p className="text-xs text-stone-500">{t('settings.aiOnDevice')}</p>
         ) : null}
       </form>
