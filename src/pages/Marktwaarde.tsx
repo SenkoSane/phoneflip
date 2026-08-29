@@ -68,10 +68,10 @@ function Sheet({
   children: ReactNode
 }) {
   return (
-    <section className="min-w-0 rounded-2xl border border-white/8 bg-white/3 p-4 sm:p-5">
-      <h3 className="font-display text-xl text-stone-50">{title}</h3>
-      {hint ? <p className="mt-1 max-w-2xl text-sm text-stone-400">{hint}</p> : null}
-      <div className="mt-4 min-w-0">{children}</div>
+    <section className="pf-surface min-w-0 rounded-xl p-4 sm:p-5">
+      <h3 className="font-display text-xl text-[var(--pf-fg)]">{title}</h3>
+      {hint ? <p className="pf-muted mt-1.5 max-w-2xl text-sm leading-relaxed">{hint}</p> : null}
+      <div className="mt-5 min-w-0">{children}</div>
     </section>
   )
 }
@@ -134,26 +134,26 @@ export function Marktwaarde() {
   }
 
   return (
-    <div className="w-full min-w-0 max-w-full space-y-6">
+    <div className="w-full min-w-0 max-w-full space-y-7 sm:space-y-9">
       <div className="min-w-0">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-500/80">
+        <p className="pf-accent-text font-mono text-xs uppercase tracking-[0.18em]">
           {t('mw.kicker')}
         </p>
-        <h2 className="font-display mt-1 text-2xl text-stone-50 sm:text-3xl">{t('mw.title')}</h2>
-        <p className="mt-2 max-w-2xl text-sm text-stone-400">
+        <h2 className="font-display mt-1.5 text-2xl text-[var(--pf-fg)] sm:text-3xl">{t('mw.title')}</h2>
+        <p className="pf-muted mt-2.5 max-w-2xl text-sm leading-relaxed">
           {t('mw.intro', { date: updatedLabel })}
         </p>
         <Link
           to="/leveranciers"
-          className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-amber-500/25 px-3 text-sm text-amber-400 sm:w-auto sm:justify-start sm:border-0 sm:px-0"
+          className="pf-accent-text mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-[var(--pf-accent-border)] px-3 text-sm sm:w-auto sm:justify-start sm:border-0 sm:px-0"
         >
           {t('sup.buyThis')}
         </Link>
       </div>
 
-      <section className="rounded-2xl border border-amber-500/25 bg-amber-500/10 p-4 sm:p-5">
-        <h3 className="text-sm font-medium text-stone-100">{t('coach.mwTitle')}</h3>
-        <ul className="mt-3 space-y-2 text-sm text-stone-300">
+      <section className="pf-surface rounded-xl p-4 sm:p-5">
+        <h3 className="text-sm font-medium text-[var(--pf-fg)]">{t('coach.mwTitle')}</h3>
+        <ul className="pf-subtle mt-3 space-y-2.5 text-sm leading-relaxed">
           <li>{t('coach.mw1')}</li>
           <li>{t('coach.mw2')}</li>
           <li>{t('coach.mw3')}</li>
@@ -162,7 +162,7 @@ export function Marktwaarde() {
       </section>
 
       <Sheet title={t('mw.bestTitle')} hint={t('mw.bestHint')}>
-        <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
+        <ul className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
           {GROUPS.map((g) => {
             const row = rowOf(g)
             const p = pick[g.gen] ?? defaultPick(g)
@@ -177,20 +177,20 @@ export function Marktwaarde() {
               .filter(Boolean)
               .join(' / ') || row.bestBuy.label
             return (
-              <li key={g.gen} className="min-w-0 rounded-xl border border-amber-500/25 bg-amber-500/10 p-3">
+              <li key={g.gen} className="pf-surface-raised min-w-0 rounded-xl p-4 sm:p-5">
                 <a
                   href={`#mw-${g.gen}`}
-                  className="flex min-h-11 min-w-0 items-center justify-between gap-3"
+                  className="flex min-h-11 min-w-0 items-start justify-between gap-3"
                 >
                   <span className="min-w-0">
-                    <span className="block truncate text-sm font-medium text-stone-100">
+                    <span className="block truncate text-base font-medium text-[var(--pf-fg)]">
                       {g.title}
                     </span>
-                    <span className="block truncate text-[11px] text-stone-500">
+                    <span className="pf-subtle mt-1 block text-sm leading-snug">
                       {variant.label} · {row.storage} · {label}
                     </span>
                   </span>
-                  <span className="money shrink-0 text-base text-amber-200">{best.text}</span>
+                  <span className="pf-accent-text money shrink-0 text-lg">{best.text}</span>
                 </a>
                 <VariantChips
                   variants={g.variants}
@@ -209,10 +209,10 @@ export function Marktwaarde() {
       </Sheet>
 
       <div>
-        <h3 className="font-display text-xl text-stone-50">{t('mw.buyTitle')}</h3>
-        <p className="mt-1 max-w-2xl text-sm text-stone-400">{t('mw.buyHint')}</p>
-        <p className="mt-1 max-w-2xl text-sm text-stone-500">{t('mw.storageHint')}</p>
-        <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
+        <h3 className="font-display text-xl text-[var(--pf-fg)]">{t('mw.buyTitle')}</h3>
+        <p className="pf-muted mt-1.5 max-w-2xl text-sm leading-relaxed">{t('mw.buyHint')}</p>
+        <p className="pf-muted mt-1 max-w-2xl text-sm leading-relaxed">{t('mw.storageHint')}</p>
+        <div className="mt-5 grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
           {GROUPS.map((g) => {
             const p = pick[g.gen] ?? defaultPick(g)
             const variant = variantOf(g, p.variantId)
@@ -232,23 +232,23 @@ export function Marktwaarde() {
       </div>
 
       <div className="grid min-w-0 gap-4 sm:grid-cols-2">
-        <section className="min-w-0 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4 sm:p-5">
-          <h3 className="font-display text-xl text-stone-50">{t('mw.do')}</h3>
-          <ul className="mt-3 space-y-2 text-sm text-stone-300">
+        <section className="pf-surface min-w-0 rounded-xl p-4 sm:p-5">
+          <h3 className="font-display text-xl text-[var(--pf-fg)]">{t('mw.do')}</h3>
+          <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-[var(--pf-subtle)]">
             {DO_KEYS.map((key) => (
-              <li key={key} className="flex gap-2">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-400" />
+              <li key={key} className="flex gap-2.5">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-emerald-500/80" />
                 <span className="min-w-0">{t(key)}</span>
               </li>
             ))}
           </ul>
         </section>
-        <section className="min-w-0 rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4 sm:p-5">
-          <h3 className="font-display text-xl text-stone-50">{t('mw.skip')}</h3>
-          <ul className="mt-3 space-y-2 text-sm text-stone-300">
+        <section className="pf-surface min-w-0 rounded-xl p-4 sm:p-5">
+          <h3 className="font-display text-xl text-[var(--pf-fg)]">{t('mw.skip')}</h3>
+          <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-[var(--pf-subtle)]">
             {DONT_KEYS.map((key) => (
-              <li key={key} className="flex gap-2">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-rose-400" />
+              <li key={key} className="flex gap-2.5">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-rose-500/80" />
                 <span className="min-w-0">{t(key)}</span>
               </li>
             ))}
@@ -270,7 +270,7 @@ function VariantChips({
 }) {
   if (variants.length <= 1) return null
   return (
-    <div className="mt-2 flex min-w-0 flex-wrap gap-2">
+    <div className="mt-4 flex min-w-0 flex-wrap gap-2.5">
       {variants.map((v) => {
         const on = v.id === value
         return (
@@ -279,10 +279,8 @@ function VariantChips({
             type="button"
             aria-pressed={on}
             onClick={() => onChange(v.id)}
-            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3 text-sm font-medium ${
-              on
-                ? 'bg-stone-100 text-stone-950'
-                : 'border border-white/10 bg-white/5 text-stone-200'
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3.5 text-sm font-medium ${
+              on ? 'pf-chip-on' : 'pf-chip'
             }`}
           >
             {v.label}
@@ -303,7 +301,7 @@ function StorageChips({
   onChange: (s: MarktStorage) => void
 }) {
   return (
-    <div className="mt-2 flex min-w-0 flex-wrap gap-2">
+    <div className="mt-3 flex min-w-0 flex-wrap gap-2.5">
       {rows.map((r) => {
         const on = r.storage === value
         return (
@@ -312,10 +310,8 @@ function StorageChips({
             type="button"
             aria-pressed={on}
             onClick={() => onChange(r.storage)}
-            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3 text-sm font-medium ${
-              on
-                ? 'bg-amber-500 text-stone-950'
-                : 'border border-white/10 bg-white/5 text-stone-200'
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3.5 text-sm font-medium ${
+              on ? 'pf-chip-accent' : 'pf-chip'
             }`}
           >
             {r.storage}
@@ -366,12 +362,12 @@ function ModelCard({
   return (
     <article
       id={`mw-${group.gen}`}
-      className="flex min-w-0 scroll-mt-20 flex-col rounded-2xl border border-white/8 bg-white/3 p-4 sm:p-5"
+      className="pf-surface flex min-w-0 scroll-mt-20 flex-col rounded-xl p-4 sm:p-5"
     >
       <header className="min-w-0">
         <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
-          <h4 className="font-display min-w-0 truncate text-lg text-stone-50">{group.title}</h4>
-          <p className="shrink-0 text-[11px] uppercase tracking-[0.14em] text-stone-500">
+          <h4 className="font-display min-w-0 truncate text-lg text-[var(--pf-fg)]">{group.title}</h4>
+          <p className="pf-muted shrink-0 text-xs uppercase tracking-[0.12em]">
             {row.model} · {row.storage}
           </p>
         </div>
@@ -379,7 +375,7 @@ function ModelCard({
         <StorageChips rows={storageRows} value={row.storage} onChange={onStorage} />
       </header>
 
-      <div className="mt-3 grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
+      <div className="mt-5 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
         <Stat
           label={t('mw.working')}
           value={band(row.prive)}
@@ -392,24 +388,24 @@ function ModelCard({
         />
       </div>
 
-      <div className="mt-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-3">
+      <div className="pf-surface-raised mt-5 rounded-xl px-3.5 py-3.5">
         <div className="flex min-w-0 items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-amber-500/90">
+            <p className="pf-accent-text text-xs font-medium uppercase tracking-[0.12em]">
               {t('mw.bestBuy')}
             </p>
-            <p className="mt-0.5 truncate text-sm text-stone-200">{bestLabel}</p>
+            <p className="mt-1 truncate text-sm text-[var(--pf-fg)]">{bestLabel}</p>
           </div>
-          <p className="money shrink-0 text-lg text-amber-200">{best.text}</p>
+          <p className="pf-accent-text money shrink-0 text-lg">{best.text}</p>
         </div>
-        <p className="mt-1 text-[11px] leading-snug text-stone-500">{t('mw.bestAim')}</p>
+        <p className="pf-muted mt-1.5 text-xs leading-snug">{t('mw.bestAim')}</p>
       </div>
 
-      <div className="mt-4 min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+      <div className="mt-5 min-w-0">
+        <p className="pf-muted text-xs font-medium uppercase tracking-[0.12em]">
           {t('mw.parts')}
         </p>
-        <ul className="mt-2 grid min-w-0 grid-cols-2 gap-2">
+        <ul className="mt-2.5 grid min-w-0 grid-cols-2 gap-3">
           <PartChip label={t('mw.scherm')} cell={scherm} href={`/leveranciers?m=${row.id}#scherm`} />
           <PartChip label={t('mw.accu')} cell={accu} href={`/leveranciers?m=${row.id}#accu`} />
           <PartChip label={t('mw.laadpoort')} cell={poort} href={`/leveranciers?m=${row.id}#laadpoort`} />
@@ -417,21 +413,21 @@ function ModelCard({
         </ul>
         <Link
           to={`/leveranciers?m=${row.id}`}
-          className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-amber-500/25 px-3 text-sm text-amber-400 sm:w-auto sm:justify-start sm:border-0 sm:px-0"
+          className="pf-accent-text mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-[var(--pf-accent-border)] px-3 text-sm sm:w-auto sm:justify-start sm:border-0 sm:px-0"
         >
           {t('sup.buyThis')}
         </Link>
       </div>
 
-      <div className="mt-4 min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+      <div className="mt-5 min-w-0">
+        <p className="pf-muted text-xs font-medium uppercase tracking-[0.12em]">
           {t('mw.single')}
         </p>
         <ScenarioList
           scenarios={row.scenarios.filter((s) => s.defects.length === 1)}
           bestIds={bestIds}
         />
-        <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+        <p className="pf-muted mt-5 text-xs font-medium uppercase tracking-[0.12em]">
           {t('mw.combo')}
         </p>
         <ScenarioList
@@ -457,7 +453,7 @@ function ScenarioList({
     skipTight: t('mw.skipTight'),
   }
   return (
-    <ul className="mt-1 min-w-0 divide-y divide-white/6">
+    <ul className="mt-1.5 min-w-0 divide-y divide-[var(--pf-border)]">
       {scenarios.map((s) => {
         const cell = maxCell(s.buy, cellLabels)
         const isBest = bestIds.has(s.id)
@@ -465,28 +461,28 @@ function ScenarioList({
         return (
           <li
             key={s.id}
-            className={`flex min-h-11 min-w-0 items-center justify-between gap-3 py-2 ${
-              isBest ? 'rounded-lg bg-amber-500/10 px-2' : ''
+            className={`flex min-h-11 min-w-0 items-center justify-between gap-3 py-2.5 ${
+              isBest ? 'rounded-lg bg-[var(--pf-accent-soft)] px-2.5' : ''
             }`}
           >
             <div className="min-w-0">
-              <p className="truncate text-sm text-stone-200">
+              <p className="truncate text-sm text-[var(--pf-fg)]">
                 {sc === `mw.sc.${s.id}` ? s.label : sc}
                 {isBest ? (
-                  <span className="ml-1.5 text-[10px] font-medium uppercase tracking-wider text-amber-400">
+                  <span className="pf-accent-text ml-1.5 text-[10px] font-medium uppercase tracking-wider">
                     {t('mw.best')}
                   </span>
                 ) : null}
               </p>
               {cell.note ? (
-                <p className="line-clamp-2 text-[11px] text-stone-500">{cell.note}</p>
+                <p className="pf-muted mt-0.5 line-clamp-2 text-xs leading-snug">{cell.note}</p>
               ) : s.huis ? (
-                <p className="truncate text-[11px] text-stone-600">{t('mw.afterFix')}</p>
+                <p className="pf-muted mt-0.5 truncate text-xs">{t('mw.afterFix')}</p>
               ) : null}
             </div>
             <p
               className={`money shrink-0 text-sm ${
-                cell.skip ? 'text-stone-500' : isBest ? 'text-amber-200' : 'text-stone-100'
+                cell.skip ? 'pf-muted' : isBest ? 'pf-accent-text' : 'text-[var(--pf-fg)]'
               }`}
             >
               {cell.text}
@@ -500,10 +496,10 @@ function ScenarioList({
 
 function Stat({ label, value, hint }: { label: string; value: string; hint: string }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/8 bg-black/20 px-3 py-2.5">
-      <p className="text-[11px] leading-tight uppercase tracking-[0.12em] text-stone-500">{label}</p>
-      <p className="money mt-1 text-sm text-stone-100">{value}</p>
-      <p className="mt-0.5 text-[11px] text-amber-200/80">{hint}</p>
+    <div className="pf-surface-inset min-w-0 rounded-lg px-3.5 py-3">
+      <p className="pf-muted text-xs leading-tight uppercase tracking-[0.12em]">{label}</p>
+      <p className="money mt-1 text-sm text-[var(--pf-fg)]">{value}</p>
+      <p className="pf-accent-text mt-1 text-xs">{hint}</p>
     </div>
   )
 }
@@ -519,15 +515,15 @@ function PartChip({
 }) {
   const inner = (
     <>
-      <p className="truncate text-[11px] uppercase tracking-wider text-stone-500">{label}</p>
-      <p className="money mt-0.5 text-sm text-stone-100">{cell.text}</p>
+      <p className="pf-muted truncate text-xs uppercase tracking-wider">{label}</p>
+      <p className="money mt-1 text-sm text-[var(--pf-fg)]">{cell.text}</p>
       {cell.note ? (
-        <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-stone-600">{cell.note}</p>
+        <p className="pf-muted mt-1 line-clamp-2 text-xs leading-snug">{cell.note}</p>
       ) : null}
     </>
   )
   return (
-    <li className="min-w-0 rounded-lg border border-white/8 bg-black/20 px-2.5 py-2">
+    <li className="pf-surface-inset min-w-0 rounded-lg px-3 py-2.5">
       {href ? (
         <Link to={href} className="block min-h-11 min-w-0">
           {inner}

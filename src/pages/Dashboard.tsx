@@ -180,8 +180,8 @@ export function Dashboard() {
           </section>
 
           <section className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <div className="rounded-2xl border border-white/8 bg-white/3 p-5 lg:col-span-2">
-              <h3 className="text-sm font-medium text-stone-300">{t('dash.expenses')}</h3>
+            <div className="pf-surface rounded-2xl p-5 lg:col-span-2">
+              <h3 className="text-sm font-medium text-stone-200">{t('dash.expenses')}</h3>
               <div className="mt-4 space-y-3">
                 <Bar label={t('dash.barPhones')} amount={stats.inkoop} total={stats.kosten} />
                 <Bar label={t('dash.barParts')} amount={stats.onderdelen} total={stats.kosten} />
@@ -195,8 +195,8 @@ export function Dashboard() {
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-2xl border border-white/8 bg-white/3 p-5">
-                <h3 className="text-sm font-medium text-stone-300">{t('dash.tickets')}</h3>
+              <div className="pf-surface rounded-2xl p-5">
+                <h3 className="text-sm font-medium text-stone-200">{t('dash.tickets')}</h3>
                 <ul className="mt-4 space-y-2">
                   {(Object.keys(byStatus) as PhoneStatus[]).map((s) => (
                     <li key={s} className="flex items-center justify-between text-sm">
@@ -212,8 +212,8 @@ export function Dashboard() {
                   {t('dash.openShop')}
                 </Link>
               </div>
-              <div className="rounded-2xl border border-white/8 bg-white/3 p-5">
-                <h3 className="text-sm font-medium text-stone-300">{t('dash.repairs')}</h3>
+              <div className="pf-surface rounded-2xl p-5">
+                <h3 className="text-sm font-medium text-stone-200">{t('dash.repairs')}</h3>
                 <ul className="mt-4 space-y-2">
                   {JOB_STATUSES.map((s) => (
                     <li key={s} className="flex items-center justify-between text-sm">
@@ -336,10 +336,10 @@ function Stat({
   large?: boolean
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/8 bg-white/3 p-4 sm:p-5">
-      <p className="text-[11px] uppercase tracking-[0.14em] text-stone-500">{label}</p>
+    <div className="pf-surface min-w-0 rounded-2xl p-4 sm:p-5">
+      <p className="pf-muted text-xs uppercase tracking-[0.14em]">{label}</p>
       <p className={`money font-mono mt-2 overflow-x-auto text-lg sm:text-xl lg:text-2xl ${large ? 'xl:text-3xl' : ''} ${tone}`}>{value}</p>
-      <p className="mt-1 text-xs text-stone-500">{hint}</p>
+      <p className="pf-muted mt-1 text-xs">{hint}</p>
     </div>
   )
 }

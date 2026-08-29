@@ -131,7 +131,7 @@ export function JanChat() {
       type="button"
       onClick={() => setOpen(true)}
       aria-label={t('jan.open')}
-      className="pointer-events-auto fixed z-30 flex size-12 items-center justify-center rounded-full bg-amber-500 text-[13px] font-bold leading-none text-stone-950 shadow-lg shadow-black/40 hover:bg-amber-400 right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] sm:right-6 sm:bottom-8 lg:bottom-6"
+      className="pointer-events-auto fixed z-30 flex size-12 items-center justify-center rounded-full bg-[var(--pf-accent)] text-[13px] font-bold leading-none text-[var(--pf-chip-accent-fg)] right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] sm:right-6 sm:bottom-8 lg:bottom-6"
     >
       J
     </button>
@@ -148,21 +148,21 @@ export function JanChat() {
       <div
         role="dialog"
         aria-labelledby={titleId}
-        className="relative flex max-h-[min(28rem,62dvh)] w-full min-w-0 flex-col rounded-t-2xl border border-white/10 bg-stone-900 shadow-2xl sm:mb-8 sm:mr-6 sm:max-h-[min(36rem,72dvh)] sm:w-[min(100%-3rem,28rem)] sm:rounded-2xl lg:mb-6 lg:max-w-md"
+        className="pf-surface-raised relative flex max-h-[min(28rem,62dvh)] w-full min-w-0 flex-col rounded-t-xl sm:mb-8 sm:mr-6 sm:max-h-[min(36rem,72dvh)] sm:w-[min(100%-3rem,28rem)] sm:rounded-xl lg:mb-6 lg:max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="flex min-w-0 shrink-0 items-center gap-2 border-b border-white/8 px-3 py-2">
+        <header className="flex min-w-0 shrink-0 items-center gap-2 border-b border-[var(--pf-border)] px-3 py-2">
           <div className="min-w-0 flex-1">
-            <p id={titleId} className="truncate text-sm font-medium text-stone-100">
+            <p id={titleId} className="truncate text-sm font-medium text-[var(--pf-fg)]">
               {t('jan.title')}
             </p>
-            <p className="truncate text-[11px] text-stone-500">{t('jan.hint')}</p>
+            <p className="pf-muted truncate text-xs">{t('jan.hint')}</p>
           </div>
           {msgs.length > 0 ? (
             <button
               type="button"
               onClick={clearChat}
-              className="inline-flex min-h-11 shrink-0 items-center rounded-lg px-2.5 text-xs text-stone-400 hover:bg-white/5 hover:text-stone-200"
+              className="pf-muted inline-flex min-h-11 shrink-0 items-center rounded-lg px-2.5 text-xs hover:bg-[var(--pf-surface)] hover:text-[var(--pf-subtle)]"
             >
               {t('jan.clear')}
             </button>
@@ -170,7 +170,7 @@ export function JanChat() {
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-lg text-stone-400 hover:bg-white/5 hover:text-stone-100"
+            className="pf-muted inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-lg hover:bg-[var(--pf-surface)] hover:text-[var(--pf-fg)]"
             aria-label={t('jan.close')}
           >
             ×
@@ -179,7 +179,7 @@ export function JanChat() {
 
         <div ref={listRef} className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-3 py-3">
           {msgs.length === 0 ? (
-            <p className="text-sm leading-relaxed text-stone-400">{t('jan.empty')}</p>
+            <p className="pf-muted text-sm leading-relaxed">{t('jan.empty')}</p>
           ) : (
             <ul className="flex min-w-0 flex-col gap-2.5">
               {msgs.map((m) => (
@@ -188,14 +188,14 @@ export function JanChat() {
                   className={`flex min-w-0 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] min-w-0 rounded-2xl px-3 py-2 text-sm leading-relaxed break-words ${
+                    className={`max-w-[85%] min-w-0 rounded-xl px-3 py-2 text-sm leading-relaxed break-words ${
                       m.role === 'user'
-                        ? 'rounded-br-md bg-amber-500/20 text-stone-100'
-                        : 'rounded-bl-md bg-white/8 text-stone-200'
+                        ? 'rounded-br-md bg-[var(--pf-accent-soft)] text-[var(--pf-fg)]'
+                        : 'rounded-bl-md bg-[var(--pf-surface)] text-[var(--pf-subtle)]'
                     }`}
                   >
                     {m.role === 'assistant' ? (
-                      <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-amber-500/80">
+                      <p className="pf-accent-text mb-1 font-mono text-[10px] uppercase tracking-wider">
                         {t('jan.name')}
                       </p>
                     ) : null}
@@ -205,7 +205,7 @@ export function JanChat() {
               ))}
             </ul>
           )}
-          {busy ? <p className="mt-2 text-xs text-stone-500">{t('jan.thinking')}</p> : null}
+          {busy ? <p className="pf-muted mt-2 text-xs">{t('jan.thinking')}</p> : null}
           {err ? (
             <p className="mt-2 text-sm text-rose-300">
               {err}
@@ -224,7 +224,7 @@ export function JanChat() {
             </p>
           ) : null}
           {!hasKey ? (
-            <p className="mt-3 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-sm text-amber-100">
+            <p className="pf-surface mt-3 rounded-xl px-3 py-2 text-sm text-[var(--pf-subtle)]">
               {t('jan.needKey')}{' '}
               <Link
                 to="/instellingen"
@@ -238,7 +238,7 @@ export function JanChat() {
         </div>
 
         <form
-          className="flex min-w-0 shrink-0 items-end gap-2 border-t border-white/8 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+          className="flex min-w-0 shrink-0 items-end gap-2 border-t border-[var(--pf-border)] px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
           onSubmit={(e) => {
             e.preventDefault()
             void send()
@@ -251,7 +251,7 @@ export function JanChat() {
             onChange={(e) => setDraft(e.target.value)}
             placeholder={t('jan.placeholder')}
             disabled={!hasKey || busy}
-            className="min-h-11 min-w-0 flex-1 resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-base text-stone-100 outline-none placeholder:text-stone-600 focus:border-amber-500/50 sm:text-sm"
+            className="min-h-11 min-w-0 flex-1 resize-none rounded-lg border border-[var(--pf-border-strong)] bg-[var(--pf-surface-inset)] px-3 py-2.5 text-base text-[var(--pf-fg)] outline-none placeholder:text-[var(--pf-muted)] focus:border-[var(--pf-accent-border)] sm:text-sm"
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
@@ -262,7 +262,7 @@ export function JanChat() {
           <button
             type="submit"
             disabled={!hasKey || busy || !draft.trim()}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-amber-500 px-3.5 text-sm font-semibold text-stone-950 hover:bg-amber-400 disabled:opacity-40"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-[var(--pf-accent)] px-3.5 text-sm font-semibold text-[var(--pf-chip-accent-fg)] hover:brightness-110 disabled:opacity-40"
           >
             {t('jan.send')}
           </button>

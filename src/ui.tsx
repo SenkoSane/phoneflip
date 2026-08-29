@@ -14,7 +14,7 @@ import { useT } from './i18n'
 import { isEuroZero, parseEuro } from './lib/format'
 
 export function euroClass(n: number): string {
-  if (isEuroZero(n)) return 'text-stone-500'
+  if (isEuroZero(n)) return 'pf-muted'
   if (n > 0) return 'text-emerald-400'
   return 'text-rose-400'
 }
@@ -28,7 +28,7 @@ export function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+      <span className="pf-muted text-xs font-medium uppercase tracking-[0.14em]">
         {label}
       </span>
       {children}
@@ -37,7 +37,7 @@ export function Field({
 }
 
 const inputClass =
-  'w-full min-w-0 rounded-lg border border-white/10 bg-black/30 px-3 py-2.5 text-base text-stone-100 outline-none transition placeholder:text-stone-600 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/20 sm:py-2 sm:text-sm'
+  'w-full min-w-0 rounded-lg border border-[var(--pf-border-strong)] bg-[var(--pf-surface-inset)] px-3 py-2.5 text-base text-[var(--pf-fg)] outline-none placeholder:text-[var(--pf-muted)] focus:border-[var(--pf-accent-border)] sm:py-2 sm:text-sm'
 
 export function TextInput(
   props: InputHTMLAttributes<HTMLInputElement>,
@@ -112,7 +112,7 @@ export function PrimaryButton({
   return (
     <button
       {...props}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-stone-950 transition hover:bg-amber-400 disabled:opacity-40 ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[var(--pf-accent)] px-4 py-2 text-sm font-semibold text-[var(--pf-chip-accent-fg)] hover:brightness-110 disabled:opacity-40 ${className}`}
     >
       {children}
     </button>
@@ -127,7 +127,7 @@ export function GhostButton({
   return (
     <button
       {...props}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-stone-200 transition hover:bg-white/10 disabled:opacity-40 ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[var(--pf-border-strong)] bg-[var(--pf-surface)] px-3 py-2 text-sm text-[var(--pf-subtle)] hover:bg-[var(--pf-surface-raised)] disabled:opacity-40 ${className}`}
     >
       {children}
     </button>
@@ -159,13 +159,13 @@ export function Modal({
 
   return (
     <div
-      className={`fixed inset-0 ${zClass} flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-4`}
+      className={`fixed inset-0 ${zClass} flex items-end justify-center bg-black/60 p-0 sm:items-center sm:p-4`}
       onClick={onClose}
     >
       <div
         role="dialog"
         aria-labelledby={headingId}
-        className={`w-full min-w-0 ${wide ? 'max-w-xl' : 'max-w-lg'} max-h-[min(92dvh,52rem)] overflow-x-hidden overflow-y-auto rounded-t-2xl border border-white/10 bg-stone-900 p-4 shadow-2xl sm:rounded-2xl sm:p-5`}
+        className={`pf-surface-raised w-full min-w-0 ${wide ? 'max-w-xl' : 'max-w-lg'} max-h-[min(92dvh,52rem)] overflow-x-hidden overflow-y-auto rounded-t-xl p-4 sm:rounded-xl sm:p-5`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-start justify-between gap-3">

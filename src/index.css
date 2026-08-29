@@ -6,6 +6,28 @@
   --font-display: "Fraunces", Georgia, serif;
 }
 
+/* Calm autism-friendly theme: cool charcoal, high contrast, one soft accent */
+:root {
+  --pf-bg: #12141a;
+  --pf-fg: #e8eaed;
+  --pf-surface: #1a1d24;
+  --pf-surface-raised: #22262f;
+  --pf-surface-inset: #161920;
+  --pf-border: rgba(232, 234, 237, 0.12);
+  --pf-border-strong: rgba(232, 234, 237, 0.2);
+  --pf-muted: #b0b6c0;
+  --pf-subtle: #d4d8e0;
+  --pf-accent: #c4a46a;
+  --pf-accent-soft: rgba(196, 164, 106, 0.1);
+  --pf-accent-border: rgba(196, 164, 106, 0.28);
+  --pf-chip: #2a2e38;
+  --pf-chip-border: rgba(232, 234, 237, 0.18);
+  --pf-chip-on: #e8eaed;
+  --pf-chip-on-fg: #12141a;
+  --pf-chip-accent: #c4a46a;
+  --pf-chip-accent-fg: #12141a;
+}
+
 html,
 body,
 #root {
@@ -18,8 +40,8 @@ body,
 
 body {
   margin: 0;
-  background: #0c0b0a;
-  color: #e7e5e4;
+  background: var(--pf-bg);
+  color: var(--pf-fg);
   touch-action: manipulation;
 }
 
@@ -29,9 +51,59 @@ body {
   letter-spacing: -0.03em;
 }
 
+.pf-surface {
+  background: var(--pf-surface);
+  border: 1px solid var(--pf-border);
+}
+
+.pf-surface-raised {
+  background: var(--pf-surface-raised);
+  border: 1px solid var(--pf-border-strong);
+}
+
+.pf-surface-inset {
+  background: var(--pf-surface-inset);
+  border: 1px solid var(--pf-border);
+}
+
+.pf-accent-panel {
+  background: var(--pf-accent-soft);
+  border: 1px solid var(--pf-accent-border);
+}
+
+.pf-muted {
+  color: var(--pf-muted);
+}
+
+.pf-subtle {
+  color: var(--pf-subtle);
+}
+
+.pf-accent-text {
+  color: var(--pf-accent);
+}
+
+.pf-chip {
+  background: var(--pf-chip);
+  border: 1px solid var(--pf-chip-border);
+  color: var(--pf-subtle);
+}
+
+.pf-chip-on {
+  background: var(--pf-chip-on);
+  border: 1px solid var(--pf-chip-on);
+  color: var(--pf-chip-on-fg);
+}
+
+.pf-chip-accent {
+  background: var(--pf-chip-accent);
+  border: 1px solid var(--pf-chip-accent);
+  color: var(--pf-chip-accent-fg);
+}
+
 .ticket-card {
-  background-image: radial-gradient(circle at 0 12px, #0c0b0a 6px, transparent 7px),
-    radial-gradient(circle at 0 calc(100% - 12px), #0c0b0a 6px, transparent 7px);
+  background-image: radial-gradient(circle at 0 12px, var(--pf-bg) 6px, transparent 7px),
+    radial-gradient(circle at 0 calc(100% - 12px), var(--pf-bg) 6px, transparent 7px);
 }
 
 .kanban-scroller {
@@ -71,4 +143,3 @@ body {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-
