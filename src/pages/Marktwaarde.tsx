@@ -1,12 +1,16 @@
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { localeFor, useT } from '../i18n'
 import {
-  IPHONES,
   MARKTWAARDE_UPDATED,
+  defaultStorageFor,
+  iphoneGroups,
+  pickStorageRow,
   type BuyScenario,
   type EuroBand,
   type IphoneMarkt,
+  type MarktStorage,
   type MaxBuyCell,
   type PartBand,
 } from '../data/marktwaarde'
@@ -73,6 +77,8 @@ function Sheet({
 const DO_KEYS = ['mw.do1', 'mw.do2', 'mw.do3', 'mw.do4', 'mw.do5', 'mw.do6'] as const
 const DONT_KEYS = ['mw.dont1', 'mw.dont2', 'mw.dont3', 'mw.dont4', 'mw.dont5', 'mw.dont6'] as const
 
+const GROUPS = iphoneGroups()
+
 export function Marktwaarde() {
   const t = useT()
   const updated = new Date(`${MARKTWAARDE_UPDATED}T12:00:00`)
@@ -85,6 +91,17 @@ export function Marktwaarde() {
     or: t('mw.or'),
     unknown: t('mw.unknown'),
     skipTight: t('mw.skipTight'),
+  }
+  const [pick, setPick] = useState<Record<string, MarktStorage>>(() =>
+    Object.fromEntries(GROUPS.map((g) => [g.id, defaultStorageFor(g.id)])),
+  )
+
+  function rowOf(g: (typeof GROUPS)[number]): IphoneMarkt {
+    return pickStorageRow(g.variants, pick[g.id] ?? defaultStorageFor(g.id))
+  }
+
+  function setStorage(id: string, storage: MarktStorage) {
+    setPick((prev) => ({ ...prev, [id]: storage }))
   }
 
   return (
@@ -117,7 +134,8 @@ export function Marktwaarde() {
 
       <Sheet title={t('mw.bestTitle')} hint={t('mw.bestHint')}>
         <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {IPHONES.map((row) => {
+          {GROUPS.map((g) => {
+            const row = rowOf(g)
             const best = maxCell(row.bestBuy.cell, cellLabels)
             const label = row.bestBuy.scenarioIds
               .map((id) => {
@@ -128,21 +146,26 @@ export function Marktwaarde() {
               .filter(Boolean)
               .join(' / ') || row.bestBuy.label
             return (
-              <li key={row.id} className="min-w-0">
+              <li key={g.id} className="min-w-0 rounded-xl border border-amber-500/25 bg-amber-500/10 p-3">
                 <a
-                  href={`#mw-${row.id}`}
-                  className="flex min-h-11 min-w-0 items-center justify-between gap-3 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2.5 transition hover:border-amber-500/40 hover:bg-amber-500/15"
+                  href={`#mw-${g.id}`}
+                  className="flex min-h-11 min-w-0 items-center justify-between gap-3"
                 >
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-medium text-stone-100">
-                      {row.model}
+                      {g.model}
                     </span>
                     <span className="block truncate text-[11px] text-stone-500">
-                      {label}
+                      {row.storage} · {label}
                     </span>
                   </span>
                   <span className="money shrink-0 text-base text-amber-200">{best.text}</span>
                 </a>
+                <StorageChips
+                  variants={g.variants}
+                  value={row.storage}
+                  onChange={(s) => setStorage(g.id, s)}
+                />
               </li>
             )
           })}
@@ -152,9 +175,15 @@ export function Marktwaarde() {
       <div>
         <h3 className="font-display text-xl text-stone-50">{t('mw.buyTitle')}</h3>
         <p className="mt-1 max-w-2xl text-sm text-stone-400">{t('mw.buyHint')}</p>
+        <p className="mt-1 max-w-2xl text-sm text-stone-500">{t('mw.storageHint')}</p>
         <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
-          {IPHONES.map((row) => (
-            <ModelCard key={row.id} row={row} />
+          {GROUPS.map((g) => (
+            <ModelCard
+              key={g.id}
+              row={rowOf(g)}
+              variants={g.variants}
+              onStorage={(s) => setStorage(g.id, s)}
+            />
           ))}
         </div>
       </div>
@@ -187,7 +216,48 @@ export function Marktwaarde() {
   )
 }
 
-function ModelCard({ row }: { row: IphoneMarkt }) {
+function StorageChips({
+  variants,
+  value,
+  onChange,
+}: {
+  variants: IphoneMarkt[]
+  value: MarktStorage
+  onChange: (s: MarktStorage) => void
+}) {
+  return (
+    <div className="mt-2 flex min-w-0 flex-wrap gap-2">
+      {variants.map((v) => {
+        const on = v.storage === value
+        return (
+          <button
+            key={v.storage}
+            type="button"
+            aria-pressed={on}
+            onClick={() => onChange(v.storage)}
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3 text-sm font-medium ${
+              on
+                ? 'bg-amber-500 text-stone-950'
+                : 'border border-white/10 bg-white/5 text-stone-200'
+            }`}
+          >
+            {v.storage}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function ModelCard({
+  row,
+  variants,
+  onStorage,
+}: {
+  row: IphoneMarkt
+  variants: IphoneMarkt[]
+  onStorage: (s: MarktStorage) => void
+}) {
   const t = useT()
   const cellLabels = {
     or: t('mw.or'),
@@ -221,6 +291,8 @@ function ModelCard({ row }: { row: IphoneMarkt }) {
           {row.storage}
         </p>
       </header>
+
+      <StorageChips variants={variants} value={row.storage} onChange={onStorage} />
 
       <div className="mt-3 grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
         <Stat

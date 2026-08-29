@@ -2,6 +2,8 @@ import {
   IPHONES,
   SKIP_UNDER as SHEET_SKIP,
   buyForDefects,
+  parseStorage,
+  pickStorageRow,
   type DefectId,
   type IphoneMarkt,
   type MaxBuyCell,
@@ -98,14 +100,19 @@ function cellLow(cell: MaxBuyCell): number | null {
   }
 }
 
-export function matchIphone(model: string): { row: IphoneMarkt; proish: boolean } | null {
+export function matchIphone(
+  model: string,
+  storage?: string,
+): { row: IphoneMarkt; proish: boolean } | null {
   const s = model.toLowerCase().replace(/iphone/g, ' ').replace(/\s+/g, ' ')
   const proish = /\b(pro|max|plus|mini)\b/.test(s)
   const ids = ['17', '16', '15', '14', '13', '12', '11'] as const
   for (const id of ids) {
     if (new RegExp(`(^|\\D)${id}(\\D|$)`).test(s)) {
-      const row = IPHONES.find((p) => p.id === id)
-      if (row) return { row, proish }
+      const rows = IPHONES.filter((p) => p.id === id)
+      if (!rows.length) return null
+      const wanted = parseStorage(storage) ?? parseStorage(model)
+      return { row: pickStorageRow(rows, wanted), proish }
     }
   }
   return null
@@ -148,6 +155,7 @@ function reasonKeysFor(input: {
   }
   if (input.difficulty === 'easy') keys.push('coach.easyHint')
   if (input.verdict === 'tight') keys.push('coach.tightHint')
+  if (input.verdict === 'skip' && input.skips.length === 0) keys.push('coach.skipTight')
   if (input.verdict === 'ok' && input.difficulty === 'easy') keys.push('coach.okHint')
   return [...new Set(keys)]
 }
@@ -155,11 +163,12 @@ function reasonKeysFor(input: {
 export function buyAdvice(input: {
   brand?: string
   model: string
+  storage?: string
   defects: DefectId[]
   skips?: HardSkip[]
 }): BuyAdvice {
   const skips = input.skips ?? []
-  const hit = matchIphone(input.model)
+  const hit = matchIphone(input.model, input.storage)
   const row = hit?.row ?? null
   const proish = hit?.proish ?? false
   const difficulty = difficultyFor(row, input.defects, skips)
@@ -276,7 +285,7 @@ export function suggestedAskForPhone(phone: Phone): {
 } {
   const kosten = phoneCost(phone)
   const floor = round5(kosten + BEGINNER_EXTRA)
-  const hit = matchIphone(`${phone.brand} ${phone.model}`)
+  const hit = matchIphone(`${phone.brand} ${phone.model}`, phone.storage)
   const housingLeft = /huis|deuk|dent|behuiz|kras/i.test(`${phone.damage} ${phone.todo}`)
   if (hit) {
     const ask = housingLeft ? hit.row.lichtHuis.rekenwaarde : hit.row.prive.rekenwaarde
@@ -289,6 +298,7 @@ export function suggestedAskForPhone(phone: Phone): {
 
 export function suggestedLabor(input: {
   model: string
+  storage?: string
   defects: DefectId[]
   skips?: HardSkip[]
   kind?: 'klant' | 'vriend'
@@ -346,8 +356,6 @@ export function listingText(phone: Phone, city: string, lang: 'nl' | 'en'): stri
     .join('\n')
 }
 
-const STORAGE_RE = /\b(64|128|256|512)\s*(gb)?\b/i
-
 export type ParsedListing = {
   brand: string
   model: string
@@ -361,9 +369,8 @@ export type ParsedListing = {
 export function parseListingText(raw: string): ParsedListing {
   const text = raw.replace(/\s+/g, ' ').trim()
   const lower = text.toLowerCase()
-  const hit = matchIphone(text)
-  const storageMatch = text.match(STORAGE_RE)
-  const storage = storageMatch ? `${storageMatch[1]} GB` : ''
+  const storage = parseStorage(text) ?? ''
+  const hit = matchIphone(text, storage)
 
   const defects: DefectId[] = []
   if (/scherm|barst|cracked|glass|lcd|oled|schermpje/.test(lower)) defects.push('scherm')
@@ -392,7 +399,7 @@ export function parseListingText(raw: string): ParsedListing {
   return {
     brand: hit || /samsung|galaxy/.test(lower) ? (hit ? 'Apple' : 'Samsung') : /apple|iphone/.test(lower) ? 'Apple' : 'Apple',
     model,
-    storage: storage === '64 GB' ? '64 GB' : storage,
+    storage,
     defects: [...new Set(defects)],
     skips: [...new Set(skips)],
     price: Number.isFinite(price) ? price : null,

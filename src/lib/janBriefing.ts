@@ -255,11 +255,13 @@ function modelBlock(parsed: ReturnType<typeof parseFromHistory>): string[] {
   const advice = buyAdvice({
     brand: parsed.brand,
     model: parsed.model,
+    storage: parsed.storage,
     defects: parsed.defects,
     skips: parsed.skips,
   })
   const labor = suggestedLabor({
     model: parsed.model,
+    storage: parsed.storage,
     defects: parsed.defects,
     skips: parsed.skips,
   })
@@ -275,6 +277,12 @@ function modelBlock(parsed: ReturnType<typeof parseFromHistory>): string[] {
     `Defecten: ${defectTxt}`,
     `Harde skips in bericht: ${skipTxt}`,
   ]
+
+  if (!parsed.storage) {
+    lines.push(
+      'Opslag niet genoemd — cijfers zijn de standaard-SKU (128 GB, iPhone 17: 256 GB). Vraag welke GB. 254 GB bestaat niet: dat is 256 GB. 1 TB = 1024 GB.',
+    )
+  }
 
   if (!row) {
     lines.push(
@@ -329,7 +337,7 @@ export function buildJanBriefing(history: ChatTurn[], shop?: JanShopInput | null
   if (!parsed.model) {
     chunks.push(
       'Geen iPhone-model herkend in het gesprek.',
-      'Stel 1–3 korte vragen: welk model (11–17), wat kapot (scherm/accu/behuizing), iCloud / Face ID / water?',
+      'Stel 1–3 korte vragen: welk model (11–17), welke GB (64/128/256/512/1TB; 254=256), wat kapot (scherm/accu/behuizing), iCloud / Face ID / water?',
       'Daarna nóg geen hoge inkoop verzinnen. Wijs naar /marktwaarde. Geen €200 “omdat het een iPhone is”.',
     )
   } else {

@@ -12,7 +12,7 @@ import {
   suggestedLabor,
   type BuyAdvice,
 } from '../lib/dealCoach'
-import type { DefectId } from '../data/marktwaarde'
+import { IPHONES, parseStorage, type DefectId } from '../data/marktwaarde'
 import { euro } from '../lib/format'
 import { GhostButton, PrimaryButton, TextArea } from '../ui'
 import { MessagesTeaser } from './MessagesTeaser'
@@ -29,27 +29,32 @@ export type CoachDraft = {
 
 export function BuyCoach({
   model,
+  storage,
   defects,
   skips,
   offer,
   onDefects,
   onSkips,
+  onStorage,
   onApply,
 }: {
   model: string
+  storage?: string
   defects: DefectId[]
   skips: HardSkip[]
   offer: number
   onDefects: (next: DefectId[]) => void
   onSkips: (next: HardSkip[]) => void
+  onStorage?: (next: string) => void
   onApply: (draft: CoachDraft & { defects: DefectId[]; skips: HardSkip[] }) => void
 }) {
   const t = useT()
   const [paste, setPaste] = useState('')
   const [busy, setBusy] = useState<'paste' | 'photo' | null>(null)
   const [err, setErr] = useState('')
-  const advice = buyAdvice({ model, defects, skips })
+  const advice = buyAdvice({ model, storage, defects, skips })
   const cmp = compareOffer(offer, advice)
+  const storageRows = advice.row ? IPHONES.filter((p) => p.id === advice.row!.id) : []
 
   function toggleDefect(id: DefectId) {
     onDefects(defects.includes(id) ? defects.filter((d) => d !== id) : [...defects, id])
@@ -74,7 +79,7 @@ export function BuyCoach({
         const ai = await aiParseListing(paste)
         if (ai.brand) brand = ai.brand
         if (ai.model) modelOut = ai.model
-        if (ai.storage) storage = ai.storage
+        if (ai.storage) storage = parseStorage(ai.storage) ?? ai.storage
         if (ai.damage) damage = ai.damage
         if (ai.todo) todo = ai.todo
         if (Array.isArray(ai.defects)) {
@@ -121,7 +126,8 @@ export function BuyCoach({
       onDefects(nextDef)
       onSkips(nextSkip)
       onApply({
-        model,
+        model: ai.model || model,
+        storage: parseStorage(ai.storage) ?? ai.storage,
         damage: ai.damage,
         todo: ai.todo,
         defects: nextDef,
@@ -140,6 +146,20 @@ export function BuyCoach({
         <p className="text-sm font-medium text-stone-100">{t('coach.buyTitle')}</p>
         <p className="mt-1 text-xs text-stone-500">{t('coach.buyHint')}</p>
       </div>
+
+      {storageRows.length > 0 && onStorage ? (
+        <FieldChips label={t('mw.storage')}>
+          {storageRows.map((v) => (
+            <Chip
+              key={v.storage}
+              on={advice.row?.storage === v.storage}
+              onClick={() => onStorage(v.storage)}
+            >
+              {v.storage}
+            </Chip>
+          ))}
+        </FieldChips>
+      ) : null}
 
       <FieldChips label={t('coach.defects')}>
         {DEFECTS.map((id) => (
@@ -335,6 +355,11 @@ function AdviceCard({
       <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
           <p className="text-[11px] uppercase tracking-[0.14em] text-stone-500">{t('coach.maxLabel')}</p>
+          {advice.row ? (
+            <p className="mt-0.5 truncate text-[11px] text-stone-500">
+              {advice.row.model} · {advice.row.storage}
+            </p>
+          ) : null}
           <p className="money mt-1 font-mono text-2xl text-stone-50">
             {advice.max != null ? euro(advice.max) : t('coach.skip')}
           </p>

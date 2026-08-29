@@ -238,6 +238,9 @@ const nl: Record<string, string> = {
     'Hoogste max. inkoop bij een goedkope, simpele reparatie (accu, laadpoort of alleen behuizing). Daarboven wordt de flip krap.',
   'mw.buyTitle': 'Inkoop toestel',
   'mw.buyHint': 'Per model: strakke verkoop, lichte huisschade, onderdelen en max. inkoop. Face ID, water, board: niet doen.',
+  'mw.storage': 'Opslag',
+  'mw.storageHint':
+    'Tik de GB die op het toestel staat. 254 GB bestaat niet — dat is 256 GB. 1 TB = 1024 GB. Alleen echte versies (11: geen 512/1TB, 13+: geen 64, 17: geen 128).',
   'mw.do': 'Wel doen',
   'mw.skip': 'Niet doen',
   'mw.working': 'Werkend strak',
@@ -269,7 +272,7 @@ const nl: Record<string, string> = {
   'mw.sc.poort-huis': 'Laadpoort + behuizing',
   'mw.sc.scherm-poort': 'Scherm + laadpoort',
   'mw.intro':
-    'Schattingen {date}, gericht op particulier Nederland / Marktplaats — niet Coolblue of Swappie. Standaard 128 GB (17: 256 GB). Onderdelen = Fixje / Rounded. iPhone 11 scherm kapot: meestal max €60; met slechte accu lager of skip. Max. inkoop = Marktplaats ná fix − onderdelen − buffer. Geen garantie op winst.',
+    'Schattingen {date}, gericht op particulier Nederland / Marktplaats — niet Coolblue of Swappie. Kies zelf de GB (64 / 128 / 256 / 512 / 1 TB) — 254 GB = 256 GB. Onderdelen = Fixje / Rounded. iPhone 11 128 GB scherm kapot: meestal max €60; 64 GB lager; met slechte accu skip. Max. inkoop = Marktplaats ná fix − onderdelen − buffer. Geen garantie op winst.',
 
   'settings.kicker': 'Data',
   'settings.title': 'Backup',
@@ -1152,7 +1155,7 @@ const nl: Record<string, string> = {
   'mw.or': 'of',
   'mw.do1': 'Accu en laadpoort op 11–15: vaak de ruimste marge (Fixje-onderdeel goedkoop). Dat is meestal de beste inkoop.',
   'mw.do2': 'Alleen behuizing (werkt, deukjes): max. inkoop = huis-rekenwaarde − buffer, geen extra part. Vaak een simpele Marktplaats-flip.',
-  'mw.do3': 'iPhone 11 scherm kapot: meestal max €60. Scherm + slechte accu is lager of skip — te krap.',
+  'mw.do3': 'iPhone 11 128 GB scherm kapot: meestal max €60. 64 GB lager. Scherm + slechte accu is lager of skip — te krap.',
   'mw.do4': 'Scherm alleen als de inkoop écht laag is — OLED vanaf 12 eet sneller de winst. Combinatie scherm + huis op 11/12 is vaak te krap.',
   'mw.do5': 'Camera achterkant op 11–15 kan, als het Fixje-onderdeel rond de €30–55 blijft.',
   'mw.do6': 'iPhone 16: Fixje hoge-kwaliteit/set (~€125) kan; A+ (~€210) eet de marge.',
@@ -1504,6 +1507,9 @@ const en: Record<string, string> = {
     'Highest max buy on a cheap, simple repair (battery, charge port or housing only). Above that the flip gets tight.',
   'mw.buyTitle': 'Buying a device',
   'mw.buyHint': 'Per model: clean resale, light housing wear, parts and max buy. Face ID, water, board: skip.',
+  'mw.storage': 'Storage',
+  'mw.storageHint':
+    'Tap the GB on the phone. 254 GB is not a real size — that is 256 GB. 1 TB = 1024 GB. Only real SKUs (11: no 512/1TB, 13+: no 64, 17: no 128).',
   'mw.do': 'Do',
   'mw.skip': 'Don’t',
   'mw.working': 'Working, clean',
@@ -1535,7 +1541,7 @@ const en: Record<string, string> = {
   'mw.sc.poort-huis': 'Charge port + housing',
   'mw.sc.scherm-poort': 'Screen + charge port',
   'mw.intro':
-    'Estimates {date}, aimed at private Netherlands / Marktplaats — not Coolblue or Swappie. Default 128 GB (17: 256 GB). Parts = Fixje / Rounded. iPhone 11 broken screen: usually max €60; with a weak battery lower or skip. Max buy = Marktplaats after fix − parts − buffer. No profit guarantee.',
+    'Estimates {date}, aimed at private Netherlands / Marktplaats — not Coolblue or Swappie. Pick GB yourself (64 / 128 / 256 / 512 / 1 TB) — 254 GB = 256 GB. Parts = Fixje / Rounded. iPhone 11 128 GB broken screen: usually max €60; 64 GB lower; with a weak battery skip. Max buy = Marktplaats after fix − parts − buffer. No profit guarantee.',
 
   'settings.kicker': 'Data',
   'settings.title': 'Backup',
@@ -2418,7 +2424,7 @@ const en: Record<string, string> = {
   'mw.or': 'or',
   'mw.do1': 'Battery and charge port on 11–15: often the widest margin (Fixje part is cheap). That is usually the best buy.',
   'mw.do2': 'Housing only (works, dents): max buy = housing calc − buffer, no extra part. Often a simple Marktplaats flip.',
-  'mw.do3': 'iPhone 11 broken screen: usually max €60. Screen + weak battery is lower or skip — too tight.',
+  'mw.do3': 'iPhone 11 128 GB broken screen: usually max €60. 64 GB is lower. Screen + weak battery is lower or skip — too tight.',
   'mw.do4': 'Screen only if the buy is really low — OLED from 12 eats profit faster. Screen + housing on 11/12 is often too tight.',
   'mw.do5': 'Rear camera on 11–15 can work if the Fixje part stays around €30–55.',
   'mw.do6': 'iPhone 16: Fixje high-quality/set (~€125) can work; A+ (~€210) eats the margin.',

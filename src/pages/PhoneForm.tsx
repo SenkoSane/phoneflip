@@ -143,11 +143,13 @@ export function PhoneForm() {
 
         <BuyCoach
           model={form.model}
+          storage={form.storage}
           defects={defects}
           skips={skips}
           offer={form.purchasePrice}
           onDefects={setDefects}
           onSkips={setSkips}
+          onStorage={(s) => set('storage', s)}
           onApply={(draft) => {
             setForm((f) => ({
               ...f,

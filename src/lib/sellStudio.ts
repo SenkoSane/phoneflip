@@ -51,7 +51,7 @@ export function sellGradeFor(phone: Phone): { grade: SellGrade; reasonKeys: stri
 export function askForGrade(phone: Phone, grade: SellGrade): { ask: number; floor: number } {
   const kosten = phoneCost(phone)
   const floor = round5(kosten + BEGINNER_EXTRA)
-  const hit = matchIphone(`${phone.brand} ${phone.model}`)
+  const hit = matchIphone(`${phone.brand} ${phone.model}`, phone.storage)
   if (grade === 'skip') {
     return { ask: floor, floor }
   }
