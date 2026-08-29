@@ -19,10 +19,12 @@ export function Messages() {
   const [params, setParams] = useSearchParams()
   const kant: Kant = params.get('kant') === 'verkopen' ? 'verkopen' : 'kopen'
   const skip = params.get('skip') === '1'
+  const [name, setName] = useState(() => params.get('name') ?? '')
   const [model, setModel] = useState(() => params.get('model') ?? '')
+  const [defect, setDefect] = useState(() => params.get('defect') ?? '')
   const [minText, setMinText] = useState(() => params.get('min') ?? '')
+  const [midText, setMidText] = useState(() => params.get('mid') ?? '')
   const [maxText, setMaxText] = useState(() => params.get('max') ?? '')
-  const [partsText, setPartsText] = useState(() => params.get('parts') ?? '')
   const [draft, setDraft] = useState('')
   const [polished, setPolished] = useState('')
   const [busy, setBusy] = useState(false)
@@ -30,8 +32,8 @@ export function Messages() {
   const hasKey = Boolean(readOpenAiKey())
 
   const min = useMemo(() => parsePositive(minText), [minText])
+  const mid = useMemo(() => parsePositive(midText), [midText])
   const max = useMemo(() => parsePositive(maxText), [maxText])
-  const parts = useMemo(() => parsePositive(partsText), [partsText])
 
   function setKant(next: Kant) {
     const q = new URLSearchParams(params)
@@ -84,6 +86,16 @@ export function Messages() {
           <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="block min-w-0 space-y-1.5">
               <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+                {t('msg.nameLabel')}
+              </span>
+              <TextInput
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={t('msg.namePh')}
+              />
+            </label>
+            <label className="block min-w-0 space-y-1.5">
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
                 {t('common.model')}
               </span>
               <TextInput
@@ -92,15 +104,14 @@ export function Messages() {
                 placeholder={t('buyask.deviceFallback')}
               />
             </label>
-            <label className="block min-w-0 space-y-1.5">
+            <label className="block min-w-0 space-y-1.5 sm:col-span-2">
               <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
-                {t('msg.maxLabel')}
+                {t('msg.defectLabel')}
               </span>
               <TextInput
-                inputMode="decimal"
-                value={maxText}
-                onChange={(e) => setMaxText(e.target.value)}
-                placeholder={t('msg.askPh')}
+                value={defect}
+                onChange={(e) => setDefect(e.target.value)}
+                placeholder={t('msg.defectPh')}
               />
             </label>
             <label className="block min-w-0 space-y-1.5">
@@ -116,17 +127,36 @@ export function Messages() {
             </label>
             <label className="block min-w-0 space-y-1.5">
               <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
-                {t('msg.partsLabel')}
+                {t('msg.midLabel')}
               </span>
               <TextInput
                 inputMode="decimal"
-                value={partsText}
-                onChange={(e) => setPartsText(e.target.value)}
+                value={midText}
+                onChange={(e) => setMidText(e.target.value)}
+                placeholder={t('msg.askPh')}
+              />
+            </label>
+            <label className="block min-w-0 space-y-1.5 sm:col-span-2">
+              <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-stone-500">
+                {t('msg.maxLabel')}
+              </span>
+              <TextInput
+                inputMode="decimal"
+                value={maxText}
+                onChange={(e) => setMaxText(e.target.value)}
                 placeholder={t('msg.askPh')}
               />
             </label>
           </div>
-          <SellerAskMessages model={model} min={min} max={max} parts={parts} skip={skip} />
+          <SellerAskMessages
+            name={name}
+            model={model}
+            defect={defect}
+            min={min}
+            mid={mid}
+            max={max}
+            skip={skip}
+          />
           <section className="min-w-0 rounded-2xl border border-white/8 bg-white/3 p-3 sm:p-4">
             <h3 className="text-sm font-medium text-stone-100">{t('msg.aiTitle')}</h3>
             <p className="mt-1 min-w-0 break-words text-sm text-stone-400">{t('msg.aiHint')}</p>

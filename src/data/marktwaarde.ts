@@ -1,4 +1,4 @@
-/** Cheat sheet iPhone 11–17 per opslag. Schattingen 29 augustus 2026. Verkoop = Marktplaats NL; onderdelen = Fixje / Rounded. */
+/** Cheat sheet iPhone 11–17 + Pro / Pro Max / Plus / mini per opslag. Schattingen 29 augustus 2026. Verkoop = Marktplaats NL; onderdelen = Fixje / Rounded. */
 
 export const MARKTWAARDE_UPDATED = '2026-08-29'
 
@@ -64,8 +64,25 @@ export function parseStorage(raw: string | undefined | null): MarktStorage | nul
   return null
 }
 
+/** Leading generation number from id (`15promax` → 15). */
+export function genOf(id: string): number {
+  return Number(id.match(/^\d+/)?.[0] ?? 0)
+}
+
 export function defaultStorageFor(id: string): MarktStorage {
-  return id === '17' ? '256 GB' : '128 GB'
+  // No 128 shipped: 11 Pro/Max, 15/16 Pro Max, all 17.
+  if (
+    id === '17' ||
+    id === '17pro' ||
+    id === '17promax' ||
+    id === '15promax' ||
+    id === '16promax' ||
+    id === '11pro' ||
+    id === '11promax'
+  ) {
+    return '256 GB'
+  }
+  return '128 GB'
 }
 
 export function pickStorageRow(rows: IphoneMarkt[], wanted: MarktStorage | null): IphoneMarkt {
@@ -335,8 +352,9 @@ function variants(seed: PhoneSeed, deltas: [MarktStorage, number][]): IphoneMark
 }
 
 export function modelBuffer(id: string): number {
-  if (id === '11' || id === '12') return INKOOP_BUFFER_OUD
-  if (id === '13') return 30
+  const g = genOf(id)
+  if (g === 11 || g === 12) return INKOOP_BUFFER_OUD
+  if (g === 13) return 30
   return INKOOP_BUFFER
 }
 

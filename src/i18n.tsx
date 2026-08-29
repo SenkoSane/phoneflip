@@ -374,45 +374,65 @@ const nl: Record<string, string> = {
   'coach.imeiHint': 'Voor je betaalt:',
   'buyask.title': 'Berichten aan verkopers',
   'buyask.intro':
-    'Losse kaarten, niet één blok. Eerst Hallo (staat hij nog?). Als ze antwoorden: Checks. Daarna 1e bod, eventueel 2e bod. Extra: onderdelen, afwijzing. Alles per post, jij betaalt porto.',
+    'Stappenplan voor Marktplaats-particulieren. Kort eerst (beschikbaar + Face ID + Zoek mijn), checks pas ná hun antwoord. Daarna 1e bod → 2e bod → max. Kopersbescherming + verzenden.',
+  'buyask.noFirst':
+    'Niet in bericht 1: IMEI-lijst, “koop ik niet”, FlipStudio, of 6 vragen tegelijk.',
   'buyask.imeiLink': 'IMEI checken vóór je betaalt:',
   'buyask.skipBanner': 'Dit toestel is een skip. Gebruik Afwijzing — niet bieden.',
-  'buyask.minFallback': '€ …',
-  'buyask.maxFallback': 'mijn max',
-  'buyask.partsFallback': 'onderdelen + werk',
+  'buyask.minFallback': '…',
+  'buyask.midFallback': '…',
+  'buyask.maxFallback': '…',
+  'buyask.defectFallback': 'het defect',
   'buyask.deviceFallback': 'iPhone',
-  'buyask.q.begin': 'Hallo',
-  'buyask.q.checks': 'Checks',
-  'buyask.q.offerMin': '1e bod',
-  'buyask.q.offerMax': '2e bod',
-  'buyask.q.parts': 'Onderdelen / fixen',
+  'buyask.q.contact': '1. Eerste contact',
+  'buyask.q.checks': '2. Technische check',
+  'buyask.q.clarify': '3. Alleen als onduidelijk',
+  'buyask.q.offer1': '4. 1e bod',
+  'buyask.q.offer2': '5. 2e bod',
+  'buyask.q.offerMax': '6. Max bod',
+  'buyask.q.deal': '7. Na akkoord',
+  'buyask.q.track': '8. Track & Trace',
+  'buyask.q.reminder': 'Reminder (na 20–24 uur)',
   'buyask.q.reject': 'Afwijzing',
-  'buyask.m.begin':
-    'Hoi, staat de {model} nog? Alleen verzenden, ik betaal de porto.',
+  'buyask.m.contact':
+    'Hoi{name},\nIk heb interesse in je {model}. Is deze nog beschikbaar?\nWerkt Face ID nog goed en staat Zoek mijn iPhone uit?\nIk koop via Marktplaats Kopersbescherming (verzenden).\nAlvast bedankt!',
   'buyask.m.checks':
-    'Hoi, ik koop op afstand (alleen verzenden). Kun je dit sturen?\nAccu % (screenshot Batterijconditie)\nIMEI (*#06#) + serienummer (Instellingen → Info)\nZoek mijn uit (screenshot)\nFace ID ok? Laadt hij? Waterschade?\n2 foto’s: voorkant scherm AAN + achterkant (en close-up bij krassen/deukjes)\nMet iCloud-slot, Face ID stuk of vocht koop ik niet. Alvast bedankt!',
-  'buyask.m.offerMin':
-    'Ik kan {min} bieden. Alleen verzenden, ik betaal de porto.',
+    'Top, bedankt!\nZou je voor de zekerheid dit even kunnen sturen?\n1. Screenshot van Batterijconditie (Instellingen → Batterij)\n2. IMEI (toets *#06#) en serienummer (Instellingen → Algemeen → Info)\n3. Screenshot dat Zoek mijn iPhone uitstaat\n4. 2 foto’s: voorkant + achterkant (en close-up bij krassen/deuken)\nEn even bevestigen:\n- Laadt hij normaal op (geen hitte / los contact)?\n- Camera’s, speakers en knoppen werken?\n- Geen waterschade / vocht in de lade of poort?\n- Is het scherm origineel, of is er ooit iets vervangen?\nAlvast bedankt!',
+  'buyask.m.clarify':
+    'Helder, thanks.\nNog 2 korte dingen:\n- Staat er nog een iCloud-account op / is hij uitgelogd?\n- Hoeveel GB is het precies?\nDan kan ik je een bod doen.',
+  'buyask.m.offer1':
+    'Top, bedankt voor de info en foto’s.\nOmdat {defect} vervangen moet worden en we via Kopersbescherming + verzenden werken, bied ik je {min} euro inclusief alles.\nKunnen we zo sluiten?',
+  'buyask.m.offer2':
+    'Ik begrijp je.\nReparatie + risico + verzenden reken ik mee, daarom kan ik tot {mid} euro inclusief verzending via Kopersbescherming.\nPast dat?',
   'buyask.m.offerMax':
-    'Ik kan tot {max} gaan. Alleen verzenden, ik betaal de porto.',
-  'buyask.m.parts':
-    'Ik moet onderdelen kopen om hem te fixen ({parts}), daarom kan ik {min} bieden. Alleen verzenden, ik betaal de porto.',
+    'Mijn uiterste prijs is {max} euro inclusief alles, via Kopersbescherming.\nDaarboven is het voor mij geen goede deal meer. Mocht je je bedenken, hoor ik het graag.',
+  'buyask.m.deal':
+    'Super, deal!\nZou je een Marktplaats Betaalverzoek met Kopersbescherming aan willen maken? Dan betaal ik direct.\nZodra het binnen is, hoor ik graag wanneer je hem opstuurt.',
+  'buyask.m.track':
+    'Bedankt!\nZou je de Track & Trace hieronder willen zetten zodra hij bij PostNL ligt? Dan zet ik de unbox-video klaar.',
+  'buyask.m.reminder':
+    'Hoi{name}, ik wilde even checken of je mijn berichtje nog gezien hebt. Interesse is er nog steeds!',
   'buyask.m.reject':
     'Helaas, te duur voor mij — het loont niet. Dank je wel, succes met verkopen.',
   'msg.kicker': 'WhatsApp',
   'msg.title': 'Berichten',
   'msg.intro':
-    'Klaar om te plakken. Inkopen: Hallo, dan Checks, daarna 1e bod / 2e bod, plus onderdelen en afwijzing. Verkopen: antwoorden aan kopers.',
+    'Marktplaats-stappenplan: eerst kort contact, checks pas daarna, dan 1e → 2e → max bod. Na akkoord: betaalverzoek + track & trace.',
   'msg.tabBuy': 'Inkopen',
   'msg.tabSell': 'Verkopen',
   'msg.sellHint':
     'Zelfde antwoorden als bij Te koop. Vul zelf de vraagprijs in, of open een toestel in de studio.',
-  'msg.teaser': 'Hallo, checks, 1e bod, 2e bod — plus onderdelen en nee.',
+  'msg.teaser': 'Stappenplan: contact → checks → 1e / 2e / max bod.',
   'msg.teaserSell': 'Antwoorden aan kopers: staat hij nog, prijs, ophalen, accu.',
   'msg.teaserGo': 'Alle berichten',
   'msg.askPh': '€ …',
+  'msg.nameLabel': 'Naam verkoper (optioneel)',
+  'msg.namePh': 'Jan',
+  'msg.defectLabel': 'Defect (voor het bod)',
+  'msg.defectPh': 'het scherm / de achterkant',
   'msg.minLabel': '1e bod (€)',
-  'msg.maxLabel': '2e bod / max (€)',
+  'msg.midLabel': '2e bod (€)',
+  'msg.maxLabel': 'Max bod (€)',
   'msg.partsLabel': 'Onderdelen-kosten (€, optioneel)',
   'msg.aiTitle': 'Bericht herschrijven',
   'msg.aiHint': 'Plak een concept. AI maakt het korter en vriendelijk — geen extra prijzen.',
@@ -1643,45 +1663,65 @@ const en: Record<string, string> = {
   'coach.imeiHint': 'Before you pay:',
   'buyask.title': 'Messages to sellers',
   'buyask.intro':
-    'Separate cards, not one blob. First Hallo (still available?). If they reply: Checks. Then 1st bid, maybe 2nd bid. Extra: parts, rejection. Shipping only, you pay postage.',
+    'Marktplaats step plan for private sellers. Short first (available + Face ID + Find My), checks only after they reply. Then 1st bid → 2nd bid → max. Buyer protection + shipping.',
+  'buyask.noFirst':
+    'Not in message 1: IMEI list, “I don’t buy”, FlipStudio, or 6 questions at once.',
   'buyask.imeiLink': 'Check the IMEI before you pay:',
   'buyask.skipBanner': 'This device is a skip. Use Rejection — don’t bid.',
-  'buyask.minFallback': '€ …',
-  'buyask.maxFallback': 'my max',
-  'buyask.partsFallback': 'parts + labour',
+  'buyask.minFallback': '…',
+  'buyask.midFallback': '…',
+  'buyask.maxFallback': '…',
+  'buyask.defectFallback': 'the defect',
   'buyask.deviceFallback': 'iPhone',
-  'buyask.q.begin': 'Hallo',
-  'buyask.q.checks': 'Checks',
-  'buyask.q.offerMin': '1st bid',
-  'buyask.q.offerMax': '2nd bid',
-  'buyask.q.parts': 'Parts / repair',
+  'buyask.q.contact': '1. First contact',
+  'buyask.q.checks': '2. Technical check',
+  'buyask.q.clarify': '3. Only if unclear',
+  'buyask.q.offer1': '4. 1st bid',
+  'buyask.q.offer2': '5. 2nd bid',
+  'buyask.q.offerMax': '6. Max bid',
+  'buyask.q.deal': '7. After agreement',
+  'buyask.q.track': '8. Track & Trace',
+  'buyask.q.reminder': 'Reminder (after 20–24h)',
   'buyask.q.reject': 'Rejection',
-  'buyask.m.begin':
-    'Hi, is the {model} still available? Shipping only, I pay postage.',
+  'buyask.m.contact':
+    'Hi{name},\nI’m interested in your {model}. Is it still available?\nDoes Face ID still work and is Find My iPhone off?\nI buy via Marktplaats buyer protection (shipping).\nThanks!',
   'buyask.m.checks':
-    'Hi, I buy remotely (shipping only). Could you send this?\nBattery % (screenshot Battery Health)\nIMEI (*#06#) + serial (Settings → About)\nFind My off (screenshot)\nFace ID ok? Does it charge? Water damage?\n2 photos: front screen ON + back (and a close-up if there are scratches/dents)\nI don’t buy with iCloud lock, broken Face ID or moisture. Thanks!',
-  'buyask.m.offerMin':
-    'I can offer {min}. Shipping only, I pay postage.',
+    'Great, thanks!\nCould you send this for certainty?\n1. Screenshot of Battery Health (Settings → Battery)\n2. IMEI (*#06#) and serial (Settings → General → About)\n3. Screenshot that Find My iPhone is off\n4. 2 photos: front + back (and close-up of scratches/dents)\nAnd please confirm:\n- Does it charge normally (no heat / loose contact)?\n- Cameras, speakers and buttons work?\n- No water damage / moisture in the tray or port?\n- Is the screen original, or was anything replaced?\nThanks!',
+  'buyask.m.clarify':
+    'Clear, thanks.\nTwo short things:\n- Is there still an iCloud account / is it signed out?\n- How many GB exactly?\nThen I can make an offer.',
+  'buyask.m.offer1':
+    'Thanks for the info and photos.\nBecause {defect} needs replacing and we use buyer protection + shipping, I offer you {min} euro all-in.\nCan we close on that?',
+  'buyask.m.offer2':
+    'I understand.\nI factor in repair + risk + shipping, so I can go up to {mid} euro including shipping via buyer protection.\nDoes that work?',
   'buyask.m.offerMax':
-    'I can go up to {max}. Shipping only, I pay postage.',
-  'buyask.m.parts':
-    'I have to buy parts to fix it ({parts}), so I can offer {min}. Shipping only, I pay postage.',
+    'My final price is {max} euro all-in, via buyer protection.\nAbove that it is not a good deal for me. If you change your mind, let me know.',
+  'buyask.m.deal':
+    'Great, deal!\nCould you create a Marktplaats payment request with buyer protection? I’ll pay right away.\nOnce it’s in, please tell me when you ship.',
+  'buyask.m.track':
+    'Thanks!\nCould you paste the Track & Trace below once it’s with PostNL? I’ll prepare the unbox video.',
+  'buyask.m.reminder':
+    'Hi{name}, just checking if you saw my message. I’m still interested!',
   'buyask.m.reject':
-    'Unfortunately it is too expensive for me — not worth it. Thank you, good luck selling.',
+    'Unfortunately it’s too expensive for me — not worth it. Thank you, good luck selling.',
   'msg.kicker': 'WhatsApp',
   'msg.title': 'Messages',
   'msg.intro':
-    'Ready to paste. Buying: Hallo, then Checks, then 1st / 2nd bid, plus parts and rejection. Selling: replies to buyers.',
+    'Marktplaats step plan: short contact first, checks after, then 1st → 2nd → max bid. After deal: payment request + track & trace.',
   'msg.tabBuy': 'Buying',
   'msg.tabSell': 'Selling',
   'msg.sellHint':
     'Same replies as on For sale. Fill in the asking price yourself, or open a device in the studio.',
-  'msg.teaser': 'Hallo, checks, 1st bid, 2nd bid — plus parts and no.',
+  'msg.teaser': 'Step plan: contact → checks → 1st / 2nd / max bid.',
   'msg.teaserSell': 'Replies to buyers: still available, price, pickup, battery.',
   'msg.teaserGo': 'All messages',
   'msg.askPh': '€ …',
+  'msg.nameLabel': 'Seller name (optional)',
+  'msg.namePh': 'Jan',
+  'msg.defectLabel': 'Defect (for the bid)',
+  'msg.defectPh': 'the screen / the back',
   'msg.minLabel': '1st bid (€)',
-  'msg.maxLabel': '2nd bid / max (€)',
+  'msg.midLabel': '2nd bid (€)',
+  'msg.maxLabel': 'Max bid (€)',
   'msg.partsLabel': 'Parts cost (€, optional)',
   'msg.aiTitle': 'Rewrite a message',
   'msg.aiHint': 'Paste a draft. AI makes it shorter and polite — no extra prices.',
