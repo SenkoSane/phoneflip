@@ -9,7 +9,9 @@ import {
   pickStorageRow,
   type BuyScenario,
   type EuroBand,
+  type IphoneGenGroup,
   type IphoneMarkt,
+  type IphoneVariantGroup,
   type MarktStorage,
   type MaxBuyCell,
   type PartBand,
@@ -79,6 +81,17 @@ const DONT_KEYS = ['mw.dont1', 'mw.dont2', 'mw.dont3', 'mw.dont4', 'mw.dont5', '
 
 const GROUPS = iphoneGroups()
 
+type GenPick = { variantId: string; storage: MarktStorage }
+
+function defaultPick(g: IphoneGenGroup): GenPick {
+  const v = g.variants[0]!
+  return { variantId: v.id, storage: defaultStorageFor(v.id) }
+}
+
+function variantOf(g: IphoneGenGroup, variantId: string): IphoneVariantGroup {
+  return g.variants.find((v) => v.id === variantId) ?? g.variants[0]!
+}
+
 export function Marktwaarde() {
   const t = useT()
   const updated = new Date(`${MARKTWAARDE_UPDATED}T12:00:00`)
@@ -92,16 +105,32 @@ export function Marktwaarde() {
     unknown: t('mw.unknown'),
     skipTight: t('mw.skipTight'),
   }
-  const [pick, setPick] = useState<Record<string, MarktStorage>>(() =>
-    Object.fromEntries(GROUPS.map((g) => [g.id, defaultStorageFor(g.id)])),
+  const [pick, setPick] = useState<Record<number, GenPick>>(() =>
+    Object.fromEntries(GROUPS.map((g) => [g.gen, defaultPick(g)])),
   )
 
-  function rowOf(g: (typeof GROUPS)[number]): IphoneMarkt {
-    return pickStorageRow(g.variants, pick[g.id] ?? defaultStorageFor(g.id))
+  function rowOf(g: IphoneGenGroup): IphoneMarkt {
+    const p = pick[g.gen] ?? defaultPick(g)
+    const variant = variantOf(g, p.variantId)
+    return pickStorageRow(variant.rows, p.storage)
   }
 
-  function setStorage(id: string, storage: MarktStorage) {
-    setPick((prev) => ({ ...prev, [id]: storage }))
+  function setVariant(gen: number, variantId: string) {
+    setPick((prev) => {
+      const g = GROUPS.find((x) => x.gen === gen)!
+      const variant = variantOf(g, variantId)
+      const wanted = prev[gen]?.storage ?? defaultStorageFor(variantId)
+      const row = pickStorageRow(variant.rows, wanted)
+      return { ...prev, [gen]: { variantId, storage: row.storage } }
+    })
+  }
+
+  function setStorage(gen: number, storage: MarktStorage) {
+    setPick((prev) => {
+      const g = GROUPS.find((x) => x.gen === gen)!
+      const cur = prev[gen] ?? defaultPick(g)
+      return { ...prev, [gen]: { ...cur, storage } }
+    })
   }
 
   return (
@@ -133,9 +162,11 @@ export function Marktwaarde() {
       </section>
 
       <Sheet title={t('mw.bestTitle')} hint={t('mw.bestHint')}>
-        <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2">
           {GROUPS.map((g) => {
             const row = rowOf(g)
+            const p = pick[g.gen] ?? defaultPick(g)
+            const variant = variantOf(g, p.variantId)
             const best = maxCell(row.bestBuy.cell, cellLabels)
             const label = row.bestBuy.scenarioIds
               .map((id) => {
@@ -146,25 +177,30 @@ export function Marktwaarde() {
               .filter(Boolean)
               .join(' / ') || row.bestBuy.label
             return (
-              <li key={g.id} className="min-w-0 rounded-xl border border-amber-500/25 bg-amber-500/10 p-3">
+              <li key={g.gen} className="min-w-0 rounded-xl border border-amber-500/25 bg-amber-500/10 p-3">
                 <a
-                  href={`#mw-${g.id}`}
+                  href={`#mw-${g.gen}`}
                   className="flex min-h-11 min-w-0 items-center justify-between gap-3"
                 >
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-medium text-stone-100">
-                      {g.model}
+                      {g.title}
                     </span>
                     <span className="block truncate text-[11px] text-stone-500">
-                      {row.storage} · {label}
+                      {variant.label} · {row.storage} · {label}
                     </span>
                   </span>
                   <span className="money shrink-0 text-base text-amber-200">{best.text}</span>
                 </a>
-                <StorageChips
+                <VariantChips
                   variants={g.variants}
+                  value={p.variantId}
+                  onChange={(id) => setVariant(g.gen, id)}
+                />
+                <StorageChips
+                  rows={variant.rows}
                   value={row.storage}
-                  onChange={(s) => setStorage(g.id, s)}
+                  onChange={(s) => setStorage(g.gen, s)}
                 />
               </li>
             )
@@ -177,14 +213,21 @@ export function Marktwaarde() {
         <p className="mt-1 max-w-2xl text-sm text-stone-400">{t('mw.buyHint')}</p>
         <p className="mt-1 max-w-2xl text-sm text-stone-500">{t('mw.storageHint')}</p>
         <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
-          {GROUPS.map((g) => (
-            <ModelCard
-              key={g.id}
-              row={rowOf(g)}
-              variants={g.variants}
-              onStorage={(s) => setStorage(g.id, s)}
-            />
-          ))}
+          {GROUPS.map((g) => {
+            const p = pick[g.gen] ?? defaultPick(g)
+            const variant = variantOf(g, p.variantId)
+            return (
+              <ModelCard
+                key={g.gen}
+                group={g}
+                row={rowOf(g)}
+                variantId={p.variantId}
+                storageRows={variant.rows}
+                onVariant={(id) => setVariant(g.gen, id)}
+                onStorage={(s) => setStorage(g.gen, s)}
+              />
+            )
+          })}
         </div>
       </div>
 
@@ -216,32 +259,66 @@ export function Marktwaarde() {
   )
 }
 
-function StorageChips({
+function VariantChips({
   variants,
   value,
   onChange,
 }: {
-  variants: IphoneMarkt[]
+  variants: IphoneVariantGroup[]
+  value: string
+  onChange: (id: string) => void
+}) {
+  if (variants.length <= 1) return null
+  return (
+    <div className="mt-2 flex min-w-0 flex-wrap gap-2">
+      {variants.map((v) => {
+        const on = v.id === value
+        return (
+          <button
+            key={v.id}
+            type="button"
+            aria-pressed={on}
+            onClick={() => onChange(v.id)}
+            className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3 text-sm font-medium ${
+              on
+                ? 'bg-stone-100 text-stone-950'
+                : 'border border-white/10 bg-white/5 text-stone-200'
+            }`}
+          >
+            {v.label}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function StorageChips({
+  rows,
+  value,
+  onChange,
+}: {
+  rows: IphoneMarkt[]
   value: MarktStorage
   onChange: (s: MarktStorage) => void
 }) {
   return (
     <div className="mt-2 flex min-w-0 flex-wrap gap-2">
-      {variants.map((v) => {
-        const on = v.storage === value
+      {rows.map((r) => {
+        const on = r.storage === value
         return (
           <button
-            key={v.storage}
+            key={r.storage}
             type="button"
             aria-pressed={on}
-            onClick={() => onChange(v.storage)}
+            onClick={() => onChange(r.storage)}
             className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-3 text-sm font-medium ${
               on
                 ? 'bg-amber-500 text-stone-950'
                 : 'border border-white/10 bg-white/5 text-stone-200'
             }`}
           >
-            {v.storage}
+            {r.storage}
           </button>
         )
       })}
@@ -250,12 +327,18 @@ function StorageChips({
 }
 
 function ModelCard({
+  group,
   row,
-  variants,
+  variantId,
+  storageRows,
+  onVariant,
   onStorage,
 }: {
+  group: IphoneGenGroup
   row: IphoneMarkt
-  variants: IphoneMarkt[]
+  variantId: string
+  storageRows: IphoneMarkt[]
+  onVariant: (id: string) => void
   onStorage: (s: MarktStorage) => void
 }) {
   const t = useT()
@@ -282,17 +365,19 @@ function ModelCard({
 
   return (
     <article
-      id={`mw-${row.id}`}
+      id={`mw-${group.gen}`}
       className="flex min-w-0 scroll-mt-20 flex-col rounded-2xl border border-white/8 bg-white/3 p-4 sm:p-5"
     >
-      <header className="flex min-w-0 items-baseline justify-between gap-3">
-        <h4 className="font-display min-w-0 truncate text-lg text-stone-50">{row.model}</h4>
-        <p className="shrink-0 text-[11px] uppercase tracking-[0.14em] text-stone-500">
-          {row.storage}
-        </p>
+      <header className="min-w-0">
+        <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
+          <h4 className="font-display min-w-0 truncate text-lg text-stone-50">{group.title}</h4>
+          <p className="shrink-0 text-[11px] uppercase tracking-[0.14em] text-stone-500">
+            {row.model} · {row.storage}
+          </p>
+        </div>
+        <VariantChips variants={group.variants} value={variantId} onChange={onVariant} />
+        <StorageChips rows={storageRows} value={row.storage} onChange={onStorage} />
       </header>
-
-      <StorageChips variants={variants} value={row.storage} onChange={onStorage} />
 
       <div className="mt-3 grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2">
         <Stat

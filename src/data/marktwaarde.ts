@@ -1047,15 +1047,71 @@ export const IPHONES: IphoneMarkt[] = [
   ),
 ]
 
-export function iphoneGroups(): { id: string; model: string; variants: IphoneMarkt[] }[] {
-  const ids: string[] = []
-  for (const row of IPHONES) {
-    if (!ids.includes(row.id)) ids.push(row.id)
+const VARIANT_SUFFIX_ORDER = ['', 'mini', 'plus', 'pro', 'promax'] as const
+
+/** Chip label for a model id: `11pro` → "Pro", `12mini` → "mini", `14` → "14". */
+export function variantLabel(id: string): string {
+  const gen = genOf(id)
+  const suffix = id.slice(String(gen).length)
+  switch (suffix) {
+    case '':
+      return String(gen)
+    case 'mini':
+      return 'mini'
+    case 'plus':
+      return 'Plus'
+    case 'pro':
+      return 'Pro'
+    case 'promax':
+      return 'Pro Max'
+    default:
+      return suffix || String(gen)
   }
-  return ids.map((id) => {
-    const list = IPHONES.filter((p) => p.id === id)
-    return { id, model: list[0]!.model, variants: list }
-  })
+}
+
+export type IphoneVariantGroup = {
+  id: string
+  label: string
+  model: string
+  rows: IphoneMarkt[]
+}
+
+/** One card per generation (11, 12, …) with Pro / Max / mini / Plus as variant chips. */
+export type IphoneGenGroup = {
+  gen: number
+  title: string
+  variants: IphoneVariantGroup[]
+}
+
+export function iphoneGroups(): IphoneGenGroup[] {
+  const byGen = new Map<number, Map<string, IphoneMarkt[]>>()
+  for (const row of IPHONES) {
+    const g = genOf(row.id)
+    if (!byGen.has(g)) byGen.set(g, new Map())
+    const byId = byGen.get(g)!
+    if (!byId.has(row.id)) byId.set(row.id, [])
+    byId.get(row.id)!.push(row)
+  }
+  return [...byGen.keys()]
+    .sort((a, b) => a - b)
+    .map((gen) => {
+      const byId = byGen.get(gen)!
+      const ids = [...byId.keys()].sort((a, b) => {
+        const sa = a.slice(String(gen).length)
+        const sb = b.slice(String(gen).length)
+        const ia = VARIANT_SUFFIX_ORDER.indexOf(sa as (typeof VARIANT_SUFFIX_ORDER)[number])
+        const ib = VARIANT_SUFFIX_ORDER.indexOf(sb as (typeof VARIANT_SUFFIX_ORDER)[number])
+        return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib)
+      })
+      return {
+        gen,
+        title: `iPhone ${gen}`,
+        variants: ids.map((id) => {
+          const rows = byId.get(id)!
+          return { id, label: variantLabel(id), model: rows[0]!.model, rows }
+        }),
+      }
+    })
 }
 
 export function marktFor(id: string, storage?: string | null): IphoneMarkt | undefined {
