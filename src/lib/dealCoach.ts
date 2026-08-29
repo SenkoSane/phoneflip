@@ -2,6 +2,7 @@ import {
   IPHONES,
   SKIP_UNDER as SHEET_SKIP,
   buyForDefects,
+  genOf,
   parseStorage,
   pickStorageRow,
   type DefectId,
@@ -105,15 +106,27 @@ export function matchIphone(
   storage?: string,
 ): { row: IphoneMarkt; proish: boolean } | null {
   const s = model.toLowerCase().replace(/iphone/g, ' ').replace(/\s+/g, ' ')
-  const proish = /\b(pro|max|plus|mini)\b/.test(s)
-  const ids = ['17', '16', '15', '14', '13', '12', '11'] as const
-  for (const id of ids) {
-    if (new RegExp(`(^|\\D)${id}(\\D|$)`).test(s)) {
-      const rows = IPHONES.filter((p) => p.id === id)
-      if (!rows.length) return null
-      const wanted = parseStorage(storage) ?? parseStorage(model)
-      return { row: pickStorageRow(rows, wanted), proish }
+  const isMax = /\b(pro\s*max|promax)\b/.test(s)
+  const isPlus = /\bplus\b/.test(s)
+  const isMini = /\bmini\b/.test(s)
+  const isPro = !isMax && /\bpro\b/.test(s)
+  const gens = ['17', '16', '15', '14', '13', '12', '11'] as const
+  for (const gen of gens) {
+    if (!new RegExp(`(^|\\D)${gen}(\\D|$)`).test(s)) continue
+    let id: string = gen
+    if (isMax) id = `${gen}promax`
+    else if (isPlus) id = `${gen}plus`
+    else if (isMini) id = `${gen}mini`
+    else if (isPro) id = `${gen}pro`
+    let rows = IPHONES.filter((p) => p.id === id)
+    let proish = id !== gen
+    if (!rows.length && id !== gen) {
+      rows = IPHONES.filter((p) => p.id === gen)
+      proish = true
     }
+    if (!rows.length) return null
+    const wanted = parseStorage(storage) ?? parseStorage(model)
+    return { row: pickStorageRow(rows, wanted), proish }
   }
   return null
 }
@@ -125,7 +138,7 @@ function difficultyFor(
 ): Difficulty {
   if (skips.length > 0) return 'skip'
   if (!row) return defects.includes('scherm') ? 'hard' : 'medium'
-  const gen = Number(row.id)
+  const gen = genOf(row.id)
   if (defects.includes('scherm') && gen >= 16) return 'skip'
   if (defects.includes('scherm') && gen >= 12) return 'hard'
   if (defects.includes('scherm') && defects.length > 1) return 'hard'
@@ -150,7 +163,12 @@ function reasonKeysFor(input: {
   if (input.proish) keys.push('coach.proish')
   if (!input.row) keys.push('coach.noSheet')
   if (input.difficulty === 'hard') keys.push('coach.hardOled')
-  if (input.difficulty === 'skip' && input.defects.includes('scherm') && Number(input.row?.id) >= 16) {
+  if (
+    input.difficulty === 'skip' &&
+    input.defects.includes('scherm') &&
+    input.row != null &&
+    genOf(input.row.id) >= 16
+  ) {
     keys.push('coach.skipNewScreen')
   }
   if (input.difficulty === 'easy') keys.push('coach.easyHint')
@@ -390,11 +408,7 @@ export function parseListingText(raw: string): ParsedListing {
   const priceMatch = text.match(/€\s*(\d{2,4})/) || text.match(/(\d{2,4})\s*(euro|eur)\b/i)
   const price = priceMatch ? Number(priceMatch[1]) : null
 
-  let model = hit ? hit.row.model : ''
-  if (hit?.proish) {
-    const extra = /\bmax\b/i.test(text) ? ' Pro Max' : /\bplus\b/i.test(text) ? ' Plus' : /\bmini\b/i.test(text) ? ' mini' : ' Pro'
-    model = `${hit.row.model}${extra}`
-  }
+  const model = hit ? hit.row.model : ''
 
   return {
     brand: hit || /samsung|galaxy/.test(lower) ? (hit ? 'Apple' : 'Samsung') : /apple|iphone/.test(lower) ? 'Apple' : 'Apple',

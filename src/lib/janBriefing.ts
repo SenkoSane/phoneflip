@@ -1,6 +1,7 @@
 import {
   MARKTWAARDE_UPDATED,
   buyForDefects,
+  genOf,
   type DefectId,
   type IphoneMarkt,
   type MaxBuyCell,
@@ -311,7 +312,7 @@ function modelBlock(parsed: ReturnType<typeof parseFromHistory>): string[] {
   if (advice.verdict === 'skip' || labor.difficulty === 'skip') {
     lines.push('Arbeid: n.v.t. (skip)')
   } else {
-    const screenLabor = Number(row.id) <= 11 ? 50 : 70
+    const screenLabor = genOf(row.id) <= 11 ? 50 : 70
     lines.push(`Arbeid (app, gekozen defecten): ${euroInt(labor.labor)}`)
     if (parsed.defects.includes('scherm')) {
       lines.push(`Arbeid scherm in die som: ${euroInt(screenLabor)}`)

@@ -401,6 +401,84 @@ export const IPHONES: IphoneMarkt[] = [
   ),
   ...variants(
     {
+      id: '11pro',
+      model: 'iPhone 11 Pro',
+      buffer: INKOOP_BUFFER_OUD,
+      prive: { min: 165, max: 200, rekenwaarde: 185 },
+      lichtHuis: { min: 140, max: 170, rekenwaarde: 155 },
+      parts: {
+        scherm: { min: 55, max: 90, note: 'Fixje OLED hq ~55 / A+ ~90' },
+        accu: { min: 32, max: 32, note: 'Fixje A+' },
+        laadpoort: { min: 22, max: 22, note: 'Fixje dock' },
+        camera: { min: 40, max: 40, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 55 },
+        accu: { k: 'n', n: 32 },
+        laadpoort: { k: 'n', n: 22 },
+        camera: { k: 'n', n: 40, note: 'Fixje ~40, oké' },
+      },
+    },
+    [
+      ['64 GB', -25],
+      ['256 GB', 0],
+      ['512 GB', 35],
+    ],
+  ),
+  ...variants(
+    {
+      id: '11promax',
+      model: 'iPhone 11 Pro Max',
+      buffer: INKOOP_BUFFER_OUD,
+      prive: { min: 185, max: 225, rekenwaarde: 205 },
+      lichtHuis: { min: 155, max: 190, rekenwaarde: 175 },
+      parts: {
+        scherm: { min: 60, max: 100, note: 'Fixje OLED hq ~60 / A+ ~100' },
+        accu: { min: 35, max: 35, note: 'Fixje A+' },
+        laadpoort: { min: 22, max: 22, note: 'Fixje dock' },
+        camera: { min: 40, max: 40, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 60 },
+        accu: { k: 'n', n: 35 },
+        laadpoort: { k: 'n', n: 22 },
+        camera: { k: 'n', n: 40, note: 'Fixje ~40, oké' },
+      },
+    },
+    [
+      ['64 GB', -25],
+      ['256 GB', 0],
+      ['512 GB', 35],
+    ],
+  ),
+  ...variants(
+    {
+      id: '12mini',
+      model: 'iPhone 12 mini',
+      buffer: INKOOP_BUFFER_OUD,
+      prive: { min: 120, max: 150, rekenwaarde: 135 },
+      lichtHuis: { min: 100, max: 130, rekenwaarde: 115 },
+      parts: {
+        scherm: { min: 55, max: 90, note: 'Fixje OLED hq ~55 / A+ ~90' },
+        accu: { min: 28, max: 28, note: 'Fixje A+' },
+        laadpoort: { min: 28, max: 28, note: 'Fixje dock' },
+        camera: { min: 40, max: 40, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 55 },
+        accu: { k: 'n', n: 28 },
+        laadpoort: { k: 'n', n: 28 },
+        camera: { k: 'n', n: 40, note: 'Fixje ~40, oké' },
+      },
+    },
+    [
+      ['64 GB', -15],
+      ['128 GB', 0],
+      ['256 GB', 20],
+    ],
+  ),
+  ...variants(
+    {
       id: '12',
       model: 'iPhone 12',
       buffer: INKOOP_BUFFER_OUD,
@@ -428,6 +506,84 @@ export const IPHONES: IphoneMarkt[] = [
   ),
   ...variants(
     {
+      id: '12pro',
+      model: 'iPhone 12 Pro',
+      buffer: INKOOP_BUFFER_OUD,
+      prive: { min: 190, max: 240, rekenwaarde: 215 },
+      lichtHuis: { min: 160, max: 205, rekenwaarde: 180 },
+      parts: {
+        scherm: { min: 80, max: 130, note: 'Fixje OLED hq ~80 / A+ ~130' },
+        accu: { min: 32, max: 32, note: 'Fixje A+' },
+        laadpoort: { min: 28, max: 28, note: 'Fixje dock' },
+        camera: { min: 55, max: 55, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 80 },
+        accu: { k: 'n', n: 32 },
+        laadpoort: { k: 'n', n: 28 },
+        camera: { k: 'n', n: 55, note: 'Fixje ~55, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 35],
+    ],
+  ),
+  ...variants(
+    {
+      id: '12promax',
+      model: 'iPhone 12 Pro Max',
+      buffer: INKOOP_BUFFER_OUD,
+      prive: { min: 220, max: 275, rekenwaarde: 250 },
+      lichtHuis: { min: 185, max: 235, rekenwaarde: 210 },
+      parts: {
+        scherm: { min: 90, max: 145, note: 'Fixje OLED hq ~90 / A+ ~145' },
+        accu: { min: 35, max: 35, note: 'Fixje A+' },
+        laadpoort: { min: 28, max: 28, note: 'Fixje dock' },
+        camera: { min: 55, max: 55, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 90 },
+        accu: { k: 'n', n: 35 },
+        laadpoort: { k: 'n', n: 28 },
+        camera: { k: 'n', n: 55, note: 'Fixje ~55, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 35],
+    ],
+  ),
+  ...variants(
+    {
+      id: '13mini',
+      model: 'iPhone 13 mini',
+      buffer: 30,
+      prive: { min: 160, max: 200, rekenwaarde: 180 },
+      lichtHuis: { min: 135, max: 170, rekenwaarde: 155 },
+      parts: {
+        scherm: { min: 70, max: 110, note: 'Fixje hq ~70 / A+ ~110' },
+        accu: { min: 28, max: 28, note: 'Fixje A+' },
+        laadpoort: { min: 28, max: 28, note: 'Fixje dock' },
+        camera: { min: 42, max: 42, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 70 },
+        accu: { k: 'n', n: 28 },
+        laadpoort: { k: 'n', n: 28 },
+        camera: { k: 'n', n: 42, note: 'Fixje ~42, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 40],
+    ],
+  ),
+  ...variants(
+    {
       id: '13',
       model: 'iPhone 13',
       buffer: 30,
@@ -444,6 +600,60 @@ export const IPHONES: IphoneMarkt[] = [
         accu: { k: 'n', n: 30 },
         laadpoort: { k: 'n', n: 28 },
         camera: { k: 'n', n: 45, note: 'Fixje ~45, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 40],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
+      id: '13pro',
+      model: 'iPhone 13 Pro',
+      buffer: 30,
+      prive: { min: 250, max: 310, rekenwaarde: 280 },
+      lichtHuis: { min: 210, max: 265, rekenwaarde: 235 },
+      parts: {
+        scherm: { min: 95, max: 150, note: 'Fixje hq ~95 / A+ ~150' },
+        accu: { min: 35, max: 35, note: 'Fixje A+' },
+        laadpoort: { min: 30, max: 30, note: 'Fixje dock' },
+        camera: { min: 60, max: 60, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 95 },
+        accu: { k: 'n', n: 35 },
+        laadpoort: { k: 'n', n: 30 },
+        camera: { k: 'n', n: 60, note: 'Fixje ~60, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 40],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
+      id: '13promax',
+      model: 'iPhone 13 Pro Max',
+      buffer: 30,
+      prive: { min: 290, max: 360, rekenwaarde: 325 },
+      lichtHuis: { min: 245, max: 305, rekenwaarde: 275 },
+      parts: {
+        scherm: { min: 110, max: 170, note: 'Fixje hq ~110 / A+ ~170' },
+        accu: { min: 38, max: 38, note: 'Fixje A+' },
+        laadpoort: { min: 30, max: 30, note: 'Fixje dock' },
+        camera: { min: 60, max: 60, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 110 },
+        accu: { k: 'n', n: 38 },
+        laadpoort: { k: 'n', n: 30 },
+        camera: { k: 'n', n: 60, note: 'Fixje ~60, oké' },
       },
     },
     [
@@ -481,6 +691,83 @@ export const IPHONES: IphoneMarkt[] = [
   ),
   ...variants(
     {
+      id: '14plus',
+      model: 'iPhone 14 Plus',
+      prive: { min: 210, max: 265, rekenwaarde: 240 },
+      lichtHuis: { min: 175, max: 225, rekenwaarde: 200 },
+      parts: {
+        scherm: { min: 95, max: 120, note: 'Fixje hq ~95 / A+ ~120' },
+        accu: { min: 32, max: 32, note: 'Fixje A+' },
+        laadpoort: { min: 40, max: 40, note: 'Fixje dock' },
+        camera: { min: 55, max: 55, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 95 },
+        accu: { k: 'n', n: 32 },
+        laadpoort: { k: 'n', n: 40 },
+        camera: { k: 'n', n: 55, note: 'Fixje ~55, krap' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 40],
+    ],
+  ),
+  ...variants(
+    {
+      id: '14pro',
+      model: 'iPhone 14 Pro',
+      prive: { min: 290, max: 360, rekenwaarde: 325 },
+      lichtHuis: { min: 245, max: 305, rekenwaarde: 275 },
+      parts: {
+        scherm: { min: 120, max: 180, note: 'Fixje hq ~120 / A+ ~180' },
+        accu: { min: 35, max: 35, note: 'Fixje A+' },
+        laadpoort: { min: 42, max: 42, note: 'Fixje dock' },
+        camera: { min: 70, max: 70, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 120 },
+        accu: { k: 'n', n: 35 },
+        laadpoort: { k: 'n', n: 42 },
+        camera: { k: 'n', n: 70, note: 'Fixje ~70, krap' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 40],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
+      id: '14promax',
+      model: 'iPhone 14 Pro Max',
+      prive: { min: 340, max: 420, rekenwaarde: 380 },
+      lichtHuis: { min: 290, max: 355, rekenwaarde: 320 },
+      parts: {
+        scherm: { min: 135, max: 200, note: 'Fixje hq ~135 / A+ ~200' },
+        accu: { min: 38, max: 38, note: 'Fixje A+' },
+        laadpoort: { min: 42, max: 42, note: 'Fixje dock' },
+        camera: { min: 70, max: 70, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 135 },
+        accu: { k: 'n', n: 38 },
+        laadpoort: { k: 'n', n: 42 },
+        camera: { k: 'n', n: 70, note: 'Fixje ~70, krap' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 20],
+      ['512 GB', 40],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
       id: '15',
       model: 'iPhone 15',
       prive: { min: 270, max: 335, rekenwaarde: 300 },
@@ -502,6 +789,82 @@ export const IPHONES: IphoneMarkt[] = [
       ['128 GB', 0],
       ['256 GB', 25],
       ['512 GB', 50],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
+      id: '15plus',
+      model: 'iPhone 15 Plus',
+      prive: { min: 300, max: 370, rekenwaarde: 335 },
+      lichtHuis: { min: 255, max: 315, rekenwaarde: 285 },
+      parts: {
+        scherm: { min: 120, max: 165, note: 'Fixje hq ~120 / A+ ~165' },
+        accu: { min: 25, max: 25, note: 'Fixje A+' },
+        laadpoort: { min: 21, max: 21, note: 'Fixje dock' },
+        camera: { min: 50, max: 50, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 120 },
+        accu: { k: 'n', n: 25 },
+        laadpoort: { k: 'n', n: 21 },
+        camera: { k: 'n', n: 50, note: 'Fixje ~50, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 25],
+      ['512 GB', 50],
+    ],
+  ),
+  ...variants(
+    {
+      id: '15pro',
+      model: 'iPhone 15 Pro',
+      prive: { min: 380, max: 470, rekenwaarde: 425 },
+      lichtHuis: { min: 320, max: 400, rekenwaarde: 360 },
+      parts: {
+        scherm: { min: 140, max: 200, note: 'Fixje hq ~140 / A+ ~200' },
+        accu: { min: 28, max: 28, note: 'Fixje A+' },
+        laadpoort: { min: 25, max: 25, note: 'Fixje dock' },
+        camera: { min: 75, max: 75, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 140 },
+        accu: { k: 'n', n: 28 },
+        laadpoort: { k: 'n', n: 25 },
+        camera: { k: 'n', n: 75, note: 'Fixje ~75, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 25],
+      ['512 GB', 50],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
+      id: '15promax',
+      model: 'iPhone 15 Pro Max',
+      prive: { min: 450, max: 560, rekenwaarde: 505 },
+      lichtHuis: { min: 380, max: 475, rekenwaarde: 430 },
+      parts: {
+        scherm: { min: 160, max: 230, note: 'Fixje hq ~160 / A+ ~230' },
+        accu: { min: 32, max: 32, note: 'Fixje A+' },
+        laadpoort: { min: 25, max: 25, note: 'Fixje dock' },
+        camera: { min: 80, max: 80, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'n', n: 160 },
+        accu: { k: 'n', n: 32 },
+        laadpoort: { k: 'n', n: 25 },
+        camera: { k: 'n', n: 80, note: 'Fixje ~80, oké' },
+      },
+    },
+    [
+      ['256 GB', 0],
+      ['512 GB', 40],
       ['1 TB', 65],
     ],
   ),
@@ -533,6 +896,82 @@ export const IPHONES: IphoneMarkt[] = [
   ),
   ...variants(
     {
+      id: '16plus',
+      model: 'iPhone 16 Plus',
+      prive: { min: 400, max: 500, rekenwaarde: 450 },
+      lichtHuis: { min: 340, max: 425, rekenwaarde: 380 },
+      parts: {
+        scherm: { min: 140, max: 230, note: 'Fixje set hq ~140 / A+ ~230' },
+        accu: { min: 28, max: 95, note: 'Fixje A+ ~28; orig. ~95' },
+        laadpoort: { min: 29, max: 29, note: 'Fixje dock' },
+        camera: { min: 75, max: 75, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'band', cheap: 140, dear: 230 },
+        accu: { k: 'n', n: 28 },
+        laadpoort: { k: 'n', n: 29 },
+        camera: { k: 'n', n: 75, note: 'Fixje ~75, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 25],
+      ['512 GB', 50],
+    ],
+  ),
+  ...variants(
+    {
+      id: '16pro',
+      model: 'iPhone 16 Pro',
+      prive: { min: 500, max: 620, rekenwaarde: 560 },
+      lichtHuis: { min: 425, max: 525, rekenwaarde: 475 },
+      parts: {
+        scherm: { min: 160, max: 260, note: 'Fixje set hq ~160 / A+ ~260' },
+        accu: { min: 32, max: 100, note: 'Fixje A+ ~32; orig. ~100' },
+        laadpoort: { min: 32, max: 32, note: 'Fixje dock' },
+        camera: { min: 95, max: 95, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'band', cheap: 160, dear: 260 },
+        accu: { k: 'n', n: 32 },
+        laadpoort: { k: 'n', n: 32 },
+        camera: { k: 'n', n: 95, note: 'Fixje ~95, oké' },
+      },
+    },
+    [
+      ['128 GB', 0],
+      ['256 GB', 25],
+      ['512 GB', 50],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
+      id: '16promax',
+      model: 'iPhone 16 Pro Max',
+      prive: { min: 600, max: 740, rekenwaarde: 670 },
+      lichtHuis: { min: 510, max: 630, rekenwaarde: 570 },
+      parts: {
+        scherm: { min: 180, max: 290, note: 'Fixje set hq ~180 / A+ ~290' },
+        accu: { min: 35, max: 110, note: 'Fixje A+ ~35; orig. ~110' },
+        laadpoort: { min: 32, max: 32, note: 'Fixje dock' },
+        camera: { min: 100, max: 100, note: 'Fixje achtercamera' },
+      },
+      formula: {
+        scherm: { k: 'band', cheap: 180, dear: 290 },
+        accu: { k: 'n', n: 35 },
+        laadpoort: { k: 'n', n: 32 },
+        camera: { k: 'n', n: 100, note: 'Fixje ~100, oké' },
+      },
+    },
+    [
+      ['256 GB', 0],
+      ['512 GB', 40],
+      ['1 TB', 65],
+    ],
+  ),
+  ...variants(
+    {
       id: '17',
       model: 'iPhone 17',
       prive: { min: 550, max: 700, rekenwaarde: 620 },
@@ -547,6 +986,56 @@ export const IPHONES: IphoneMarkt[] = [
         scherm: { k: 'either', am: 70, pulled: 300 },
         accu: { k: 'band', cheap: 25, dear: 80 },
         laadpoort: { k: 'n', n: 29 },
+        camera: { k: 'unknown' },
+      },
+    },
+    [
+      ['256 GB', 0],
+      ['512 GB', 40],
+      ['1 TB', 75],
+    ],
+  ),
+  ...variants(
+    {
+      id: '17pro',
+      model: 'iPhone 17 Pro',
+      prive: { min: 680, max: 850, rekenwaarde: 765 },
+      lichtHuis: { min: 580, max: 720, rekenwaarde: 650 },
+      parts: {
+        scherm: { min: 90, max: 350, note: 'AM soft OLED ~90 (schatting); pulled orig. ~350' },
+        accu: { min: 30, max: 90, note: 'A+ schatting ~30; orig. ~90' },
+        laadpoort: { min: 32, max: 32, note: 'Fixje 17 n.v.t.; vgl. 16 Pro ~32' },
+        camera: null,
+      },
+      formula: {
+        scherm: { k: 'either', am: 90, pulled: 350 },
+        accu: { k: 'band', cheap: 30, dear: 90 },
+        laadpoort: { k: 'n', n: 32 },
+        camera: { k: 'unknown' },
+      },
+    },
+    [
+      ['256 GB', 0],
+      ['512 GB', 40],
+      ['1 TB', 75],
+    ],
+  ),
+  ...variants(
+    {
+      id: '17promax',
+      model: 'iPhone 17 Pro Max',
+      prive: { min: 780, max: 980, rekenwaarde: 880 },
+      lichtHuis: { min: 660, max: 830, rekenwaarde: 745 },
+      parts: {
+        scherm: { min: 100, max: 380, note: 'AM soft OLED ~100 (schatting); pulled orig. ~380' },
+        accu: { min: 35, max: 100, note: 'A+ schatting ~35; orig. ~100' },
+        laadpoort: { min: 32, max: 32, note: 'Fixje 17 n.v.t.; vgl. 16 Pro Max ~32' },
+        camera: null,
+      },
+      formula: {
+        scherm: { k: 'either', am: 100, pulled: 380 },
+        accu: { k: 'band', cheap: 35, dear: 100 },
+        laadpoort: { k: 'n', n: 32 },
         camera: { k: 'unknown' },
       },
     },
