@@ -1,6 +1,11 @@
-/** Cheat sheet iPhone 11–17 + Pro / Pro Max / Plus / mini per opslag. Schattingen 29 augustus 2026. Verkoop = Marktplaats NL; onderdelen = Fixje / Rounded. */
+/**
+ * Cheat sheet iPhone 11–17 + Pro / Pro Max / Plus / mini per opslag.
+ * Bijgewerkt 23 september 2026 (na iPhone 17-launch): Marktplaats NL particuliere
+ * A-grade verkoop (= rekenwaarde), gecheckt tegen Swappie/Fixje/Leapp als plafond
+ * (privé ≈ 80–85% van laagste “goed” refurbished). Onderdelen = Fixje / Rounded.
+ */
 
-export const MARKTWAARDE_UPDATED = '2026-08-29'
+export const MARKTWAARDE_UPDATED = '2026-09-23'
 
 /** Standaard buffer (14–17). 11/12 gebruiken 35, 13 gebruikt 30 — oudere flips hebben meer risico. */
 export const INKOOP_BUFFER = 25
@@ -378,8 +383,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '11',
       model: 'iPhone 11',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 120, max: 145, rekenwaarde: 135 },
-      lichtHuis: { min: 100, max: 125, rekenwaarde: 115 },
+      prive: { min: 125, max: 155, rekenwaarde: 140 },
+      lichtHuis: { min: 105, max: 130, rekenwaarde: 120 },
       parts: {
         scherm: { min: 40, max: 70, note: 'Fixje LCD ~40 / A+ ~70' },
         accu: { min: 29, max: 29, note: 'Fixje A+' },
@@ -404,8 +409,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '11pro',
       model: 'iPhone 11 Pro',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 165, max: 200, rekenwaarde: 185 },
-      lichtHuis: { min: 140, max: 170, rekenwaarde: 155 },
+      prive: { min: 175, max: 215, rekenwaarde: 195 },
+      lichtHuis: { min: 150, max: 185, rekenwaarde: 165 },
       parts: {
         scherm: { min: 55, max: 90, note: 'Fixje OLED hq ~55 / A+ ~90' },
         accu: { min: 32, max: 32, note: 'Fixje A+' },
@@ -430,8 +435,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '11promax',
       model: 'iPhone 11 Pro Max',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 185, max: 225, rekenwaarde: 205 },
-      lichtHuis: { min: 155, max: 190, rekenwaarde: 175 },
+      prive: { min: 195, max: 240, rekenwaarde: 220 },
+      lichtHuis: { min: 165, max: 205, rekenwaarde: 185 },
       parts: {
         scherm: { min: 60, max: 100, note: 'Fixje OLED hq ~60 / A+ ~100' },
         accu: { min: 35, max: 35, note: 'Fixje A+' },
@@ -456,8 +461,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '12mini',
       model: 'iPhone 12 mini',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 120, max: 150, rekenwaarde: 135 },
-      lichtHuis: { min: 100, max: 130, rekenwaarde: 115 },
+      prive: { min: 125, max: 155, rekenwaarde: 140 },
+      lichtHuis: { min: 105, max: 130, rekenwaarde: 120 },
       parts: {
         scherm: { min: 55, max: 90, note: 'Fixje OLED hq ~55 / A+ ~90' },
         accu: { min: 28, max: 28, note: 'Fixje A+' },
@@ -482,8 +487,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '12',
       model: 'iPhone 12',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 140, max: 175, rekenwaarde: 160 },
-      lichtHuis: { min: 120, max: 150, rekenwaarde: 135 },
+      prive: { min: 145, max: 185, rekenwaarde: 165 },
+      lichtHuis: { min: 125, max: 155, rekenwaarde: 140 },
       parts: {
         scherm: { min: 63, max: 100, note: 'Fixje OLED hq ~63 / A+ ~100' },
         accu: { min: 29, max: 29, note: 'Fixje A+' },
@@ -509,8 +514,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '12pro',
       model: 'iPhone 12 Pro',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 190, max: 240, rekenwaarde: 215 },
-      lichtHuis: { min: 160, max: 205, rekenwaarde: 180 },
+      prive: { min: 205, max: 255, rekenwaarde: 230 },
+      lichtHuis: { min: 175, max: 215, rekenwaarde: 195 },
       parts: {
         scherm: { min: 80, max: 130, note: 'Fixje OLED hq ~80 / A+ ~130' },
         accu: { min: 32, max: 32, note: 'Fixje A+' },
@@ -535,8 +540,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '12promax',
       model: 'iPhone 12 Pro Max',
       buffer: INKOOP_BUFFER_OUD,
-      prive: { min: 220, max: 275, rekenwaarde: 250 },
-      lichtHuis: { min: 185, max: 235, rekenwaarde: 210 },
+      prive: { min: 235, max: 295, rekenwaarde: 265 },
+      lichtHuis: { min: 200, max: 250, rekenwaarde: 225 },
       parts: {
         scherm: { min: 90, max: 145, note: 'Fixje OLED hq ~90 / A+ ~145' },
         accu: { min: 35, max: 35, note: 'Fixje A+' },
@@ -561,8 +566,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '13mini',
       model: 'iPhone 13 mini',
       buffer: 30,
-      prive: { min: 160, max: 200, rekenwaarde: 180 },
-      lichtHuis: { min: 135, max: 170, rekenwaarde: 155 },
+      prive: { min: 175, max: 220, rekenwaarde: 200 },
+      lichtHuis: { min: 150, max: 185, rekenwaarde: 170 },
       parts: {
         scherm: { min: 70, max: 110, note: 'Fixje hq ~70 / A+ ~110' },
         accu: { min: 28, max: 28, note: 'Fixje A+' },
@@ -587,8 +592,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '13',
       model: 'iPhone 13',
       buffer: 30,
-      prive: { min: 175, max: 225, rekenwaarde: 200 },
-      lichtHuis: { min: 150, max: 190, rekenwaarde: 170 },
+      prive: { min: 200, max: 255, rekenwaarde: 225 },
+      lichtHuis: { min: 170, max: 215, rekenwaarde: 190 },
       parts: {
         scherm: { min: 75, max: 120, note: 'Fixje hq ~75 / A+ ~120' },
         accu: { min: 30, max: 30, note: 'Fixje A+' },
@@ -614,8 +619,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '13pro',
       model: 'iPhone 13 Pro',
       buffer: 30,
-      prive: { min: 250, max: 310, rekenwaarde: 280 },
-      lichtHuis: { min: 210, max: 265, rekenwaarde: 235 },
+      prive: { min: 275, max: 340, rekenwaarde: 305 },
+      lichtHuis: { min: 235, max: 290, rekenwaarde: 260 },
       parts: {
         scherm: { min: 95, max: 150, note: 'Fixje hq ~95 / A+ ~150' },
         accu: { min: 35, max: 35, note: 'Fixje A+' },
@@ -641,8 +646,8 @@ export const IPHONES: IphoneMarkt[] = [
       id: '13promax',
       model: 'iPhone 13 Pro Max',
       buffer: 30,
-      prive: { min: 290, max: 360, rekenwaarde: 325 },
-      lichtHuis: { min: 245, max: 305, rekenwaarde: 275 },
+      prive: { min: 320, max: 400, rekenwaarde: 360 },
+      lichtHuis: { min: 270, max: 340, rekenwaarde: 305 },
       parts: {
         scherm: { min: 110, max: 170, note: 'Fixje hq ~110 / A+ ~170' },
         accu: { min: 38, max: 38, note: 'Fixje A+' },
@@ -667,8 +672,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '14',
       model: 'iPhone 14',
-      prive: { min: 190, max: 245, rekenwaarde: 220 },
-      lichtHuis: { min: 160, max: 210, rekenwaarde: 185 },
+      prive: { min: 230, max: 290, rekenwaarde: 260 },
+      lichtHuis: { min: 195, max: 245, rekenwaarde: 220 },
       parts: {
         scherm: { min: 85, max: 100, note: 'Fixje hq ~85 / A+ ~100' },
         accu: { min: 29, max: 29, note: 'Fixje A+' },
@@ -693,8 +698,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '14plus',
       model: 'iPhone 14 Plus',
-      prive: { min: 210, max: 265, rekenwaarde: 240 },
-      lichtHuis: { min: 175, max: 225, rekenwaarde: 200 },
+      prive: { min: 260, max: 325, rekenwaarde: 290 },
+      lichtHuis: { min: 220, max: 275, rekenwaarde: 245 },
       parts: {
         scherm: { min: 95, max: 120, note: 'Fixje hq ~95 / A+ ~120' },
         accu: { min: 32, max: 32, note: 'Fixje A+' },
@@ -718,8 +723,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '14pro',
       model: 'iPhone 14 Pro',
-      prive: { min: 290, max: 360, rekenwaarde: 325 },
-      lichtHuis: { min: 245, max: 305, rekenwaarde: 275 },
+      prive: { min: 330, max: 415, rekenwaarde: 370 },
+      lichtHuis: { min: 280, max: 350, rekenwaarde: 315 },
       parts: {
         scherm: { min: 120, max: 180, note: 'Fixje hq ~120 / A+ ~180' },
         accu: { min: 35, max: 35, note: 'Fixje A+' },
@@ -744,8 +749,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '14promax',
       model: 'iPhone 14 Pro Max',
-      prive: { min: 340, max: 420, rekenwaarde: 380 },
-      lichtHuis: { min: 290, max: 355, rekenwaarde: 320 },
+      prive: { min: 385, max: 480, rekenwaarde: 430 },
+      lichtHuis: { min: 325, max: 410, rekenwaarde: 365 },
       parts: {
         scherm: { min: 135, max: 200, note: 'Fixje hq ~135 / A+ ~200' },
         accu: { min: 38, max: 38, note: 'Fixje A+' },
@@ -770,8 +775,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '15',
       model: 'iPhone 15',
-      prive: { min: 270, max: 335, rekenwaarde: 300 },
-      lichtHuis: { min: 230, max: 285, rekenwaarde: 255 },
+      prive: { min: 335, max: 410, rekenwaarde: 370 },
+      lichtHuis: { min: 285, max: 350, rekenwaarde: 315 },
       parts: {
         scherm: { min: 110, max: 150, note: 'Fixje hq ~110 / A+ ~150' },
         accu: { min: 23, max: 23, note: 'Fixje A+' },
@@ -796,8 +801,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '15plus',
       model: 'iPhone 15 Plus',
-      prive: { min: 300, max: 370, rekenwaarde: 335 },
-      lichtHuis: { min: 255, max: 315, rekenwaarde: 285 },
+      prive: { min: 370, max: 455, rekenwaarde: 410 },
+      lichtHuis: { min: 315, max: 385, rekenwaarde: 350 },
       parts: {
         scherm: { min: 120, max: 165, note: 'Fixje hq ~120 / A+ ~165' },
         accu: { min: 25, max: 25, note: 'Fixje A+' },
@@ -821,8 +826,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '15pro',
       model: 'iPhone 15 Pro',
-      prive: { min: 380, max: 470, rekenwaarde: 425 },
-      lichtHuis: { min: 320, max: 400, rekenwaarde: 360 },
+      prive: { min: 445, max: 545, rekenwaarde: 490 },
+      lichtHuis: { min: 380, max: 465, rekenwaarde: 415 },
       parts: {
         scherm: { min: 140, max: 200, note: 'Fixje hq ~140 / A+ ~200' },
         accu: { min: 28, max: 28, note: 'Fixje A+' },
@@ -847,8 +852,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '15promax',
       model: 'iPhone 15 Pro Max',
-      prive: { min: 450, max: 560, rekenwaarde: 505 },
-      lichtHuis: { min: 380, max: 475, rekenwaarde: 430 },
+      prive: { min: 480, max: 590, rekenwaarde: 535 },
+      lichtHuis: { min: 410, max: 500, rekenwaarde: 455 },
       parts: {
         scherm: { min: 160, max: 230, note: 'Fixje hq ~160 / A+ ~230' },
         accu: { min: 32, max: 32, note: 'Fixje A+' },
@@ -872,8 +877,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '16',
       model: 'iPhone 16',
-      prive: { min: 360, max: 450, rekenwaarde: 405 },
-      lichtHuis: { min: 305, max: 385, rekenwaarde: 345 },
+      prive: { min: 450, max: 545, rekenwaarde: 495 },
+      lichtHuis: { min: 380, max: 465, rekenwaarde: 420 },
       parts: {
         scherm: { min: 125, max: 210, note: 'Fixje set hq ~125 / A+ ~210' },
         accu: { min: 25, max: 90, note: 'Fixje A+ ~25; orig. ~90' },
@@ -898,8 +903,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '16plus',
       model: 'iPhone 16 Plus',
-      prive: { min: 400, max: 500, rekenwaarde: 450 },
-      lichtHuis: { min: 340, max: 425, rekenwaarde: 380 },
+      prive: { min: 495, max: 600, rekenwaarde: 545 },
+      lichtHuis: { min: 420, max: 510, rekenwaarde: 465 },
       parts: {
         scherm: { min: 140, max: 230, note: 'Fixje set hq ~140 / A+ ~230' },
         accu: { min: 28, max: 95, note: 'Fixje A+ ~28; orig. ~95' },
@@ -923,8 +928,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '16pro',
       model: 'iPhone 16 Pro',
-      prive: { min: 500, max: 620, rekenwaarde: 560 },
-      lichtHuis: { min: 425, max: 525, rekenwaarde: 475 },
+      prive: { min: 555, max: 680, rekenwaarde: 610 },
+      lichtHuis: { min: 470, max: 580, rekenwaarde: 520 },
       parts: {
         scherm: { min: 160, max: 260, note: 'Fixje set hq ~160 / A+ ~260' },
         accu: { min: 32, max: 100, note: 'Fixje A+ ~32; orig. ~100' },
@@ -949,8 +954,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '16promax',
       model: 'iPhone 16 Pro Max',
-      prive: { min: 600, max: 740, rekenwaarde: 670 },
-      lichtHuis: { min: 510, max: 630, rekenwaarde: 570 },
+      prive: { min: 650, max: 800, rekenwaarde: 720 },
+      lichtHuis: { min: 550, max: 680, rekenwaarde: 610 },
       parts: {
         scherm: { min: 180, max: 290, note: 'Fixje set hq ~180 / A+ ~290' },
         accu: { min: 35, max: 110, note: 'Fixje A+ ~35; orig. ~110' },
@@ -974,8 +979,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '17',
       model: 'iPhone 17',
-      prive: { min: 550, max: 700, rekenwaarde: 620 },
-      lichtHuis: { min: 470, max: 600, rekenwaarde: 530 },
+      prive: { min: 620, max: 750, rekenwaarde: 680 },
+      lichtHuis: { min: 525, max: 640, rekenwaarde: 580 },
       parts: {
         scherm: { min: 70, max: 300, note: 'AM soft OLED ~70 (schatting); pulled orig. ~300' },
         accu: { min: 25, max: 80, note: 'A+ schatting ~25 (vgl. 16); orig. ~80' },
@@ -999,8 +1004,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '17pro',
       model: 'iPhone 17 Pro',
-      prive: { min: 680, max: 850, rekenwaarde: 765 },
-      lichtHuis: { min: 580, max: 720, rekenwaarde: 650 },
+      prive: { min: 820, max: 1000, rekenwaarde: 900 },
+      lichtHuis: { min: 700, max: 850, rekenwaarde: 765 },
       parts: {
         scherm: { min: 90, max: 350, note: 'AM soft OLED ~90 (schatting); pulled orig. ~350' },
         accu: { min: 30, max: 90, note: 'A+ schatting ~30; orig. ~90' },
@@ -1024,8 +1029,8 @@ export const IPHONES: IphoneMarkt[] = [
     {
       id: '17promax',
       model: 'iPhone 17 Pro Max',
-      prive: { min: 780, max: 980, rekenwaarde: 880 },
-      lichtHuis: { min: 660, max: 830, rekenwaarde: 745 },
+      prive: { min: 950, max: 1180, rekenwaarde: 1050 },
+      lichtHuis: { min: 810, max: 1000, rekenwaarde: 890 },
       parts: {
         scherm: { min: 100, max: 380, note: 'AM soft OLED ~100 (schatting); pulled orig. ~380' },
         accu: { min: 35, max: 100, note: 'A+ schatting ~35; orig. ~100' },
