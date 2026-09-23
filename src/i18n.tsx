@@ -238,7 +238,7 @@ const nl: Record<string, string> = {
     'Jachtvolgorde: accu → laadpoort → alleen lichte behuizing (hoogste max). Scherm lager. Face ID / water / iCloud: skip.',
   'mw.buyTitle': 'Inkoop toestel',
   'mw.buyHint':
-    'Max inkoop = snelle Marktplaats-verkoop ná fix − Fixje-onderdeel − buffer (tijd + verzending + risico). Liever skip dan €10 winst.',
+    'Max inkoop = snelle Marktplaats-verkoop ná fix − Fixje-onderdeel − buffer (tijd + verzending + risico). Dunne marge = lage inkoopprijs; skip alleen bij ≤ €0 of harde defecten.',
   'mw.storage': 'Opslag',
   'mw.storageHint':
     'Tik de GB die op het toestel staat. 254 GB bestaat niet — dat is 256 GB. 1 TB = 1024 GB. Alleen echte versies (11: geen 512/1TB, 13+: geen 64, base 13–16: geen 1 TB, 17: geen 128).',
@@ -372,7 +372,7 @@ const nl: Record<string, string> = {
   'coach.easyHint': 'Accu, laadpoort of alleen deukjes: dit is waar NL-beginners winst maken.',
   'coach.tightHint': 'Krappe marge. Alleen als je hem dezelfde week wegzet.',
   'coach.okHint': 'Oké bod als IMEI, iCloud en scherm kloppen.',
-  'coach.skipTight': 'Na onderdelen en buffer blijft te weinig over.',
+  'coach.skipTight': 'Na onderdelen en buffer blijft er geen marge over.',
   'coach.pasteLabel': 'Plak Marktplaats / WhatsApp',
   'coach.pastePh': 'Plak de advertentie of het chatbericht…',
   'coach.pasteGo': 'Vul vanuit tekst',
@@ -1536,7 +1536,7 @@ const en: Record<string, string> = {
     'Hunt order: battery → charge port → light housing only (highest max). Screen lower. Face ID / water / iCloud: skip.',
   'mw.buyTitle': 'Buying a device',
   'mw.buyHint':
-    'Max buy = quick Marktplaats sell after fix − Fixje part − buffer (time + shipping + risk). Better skip than €10 profit.',
+    'Max buy = quick Marktplaats sell after fix − Fixje part − buffer (time + shipping + risk). Thin margin = low max buy; skip only at ≤ €0 or hard defects.',
   'mw.storage': 'Storage',
   'mw.storageHint':
     'Tap the GB on the phone. 254 GB is not a real size — that is 256 GB. 1 TB = 1024 GB. Only real SKUs (11: no 512/1TB, 13+: no 64, base 13–16: no 1 TB, 17: no 128).',
@@ -1670,7 +1670,7 @@ const en: Record<string, string> = {
   'coach.easyHint': 'Battery, charge port or dents only: this is where NL beginners make money.',
   'coach.tightHint': 'Tight margin. Only if you can sell it the same week.',
   'coach.okHint': 'Fine bid if IMEI, iCloud and screen check out.',
-  'coach.skipTight': 'After parts and buffer, too little is left.',
+  'coach.skipTight': 'After parts and buffer, no margin is left.',
   'coach.pasteLabel': 'Paste Marktplaats / WhatsApp',
   'coach.pastePh': 'Paste the ad or chat message…',
   'coach.pasteGo': 'Fill from text',

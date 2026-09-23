@@ -3,7 +3,8 @@
  * Bijgewerkt 23 september 2026 (na iPhone 17-launch) — beginner flip-playbook:
  * prive.rekenwaarde = snelle Marktplaats A-grade die JIJ haalt (niet Swappie-winkel).
  * Max inkoop = die verkoop − Fixje-onderdeel − buffer (tijd + verzending + risico).
- * Conservatief: liever skip dan €10 marge. Onderdelen = Fixje / Rounded.
+ * Dunne maar positieve marge → lage max-inkoop tonen. Skip alleen bij ≤ €0 of harde defecten.
+ * Onderdelen = Fixje / Rounded.
  */
 
 export const MARKTWAARDE_UPDATED = '2026-09-23'
@@ -12,8 +13,11 @@ export const MARKTWAARDE_UPDATED = '2026-09-23'
 export const INKOOP_BUFFER = 35
 export const INKOOP_BUFFER_OUD = 40
 
-/** Onder dit bedrag (na afronding-check op raw) tonen we skip i.p.v. een lullig getal. */
-export const SKIP_UNDER = 40
+/**
+ * Skip alleen als raw max-inkoop hieronder zit (≤ €0).
+ * Dunne marge (€5–€20) blijft een lage inkoopprijs, geen “te krap”.
+ */
+export const SKIP_UNDER = 1
 
 export type EuroBand = {
   min: number
@@ -129,10 +133,15 @@ export type IphoneMarkt = {
  * After-fix = strakke MP-rekenwaarde, tenzij behuizing in de combo → lichte-huisschade.
  * Behuizing zelf heeft geen extra part (alleen lagere verkoop).
  * Onderdeelprijs: goedkoop-bruikbare Fixje-hq (niet Apple OEM), of (16/17) hq/A+ / AM-vs-pulled.
- * Afronding op €5. Raw < €40 → skip / te krap.
+ * Afronding op €5. Raw ≤ €0 → skip; anders altijd een (lage) max tonen.
  */
 function round5(n: number): number {
   return Math.round(n / 5) * 5
+}
+
+/** Positieve raw → minstens €5 na afronding (voorkomt “€0” bij €1–€2 marge). */
+function showMax(raw: number): number {
+  return Math.max(round5(raw), 5)
 }
 
 type FPart =
@@ -183,19 +192,34 @@ function toCell(sell: number, p: FPart, buffer: number, note?: string): MaxBuyCe
     case 'n': {
       const raw = sell - p.n - buffer
       if (raw < SKIP_UNDER) return { kind: 'skip', label: 'skip / te krap' }
-      const value = round5(raw)
+      const value = showMax(raw)
       const n = note ?? p.note
       return n ? { kind: 'point', value, note: n } : { kind: 'point', value }
     }
     case 'band': {
-      const min = round5(sell - p.dear - buffer)
-      const max = round5(sell - p.cheap - buffer)
-      if (max < SKIP_UNDER) return { kind: 'skip', label: 'skip / te krap' }
+      const rawMin = sell - p.dear - buffer
+      const rawMax = sell - p.cheap - buffer
+      if (rawMax < SKIP_UNDER) return { kind: 'skip', label: 'skip / te krap' }
+      const max = showMax(rawMax)
+      const min = rawMin < SKIP_UNDER ? max : Math.min(showMax(rawMin), max)
       return note ? { kind: 'band', min, max, note } : { kind: 'band', min, max }
     }
     case 'either': {
-      const a = round5(sell - p.am - buffer)
-      const b = round5(sell - p.pulled - buffer)
+      const rawA = sell - p.am - buffer
+      const rawB = sell - p.pulled - buffer
+      if (rawA < SKIP_UNDER && rawB < SKIP_UNDER) {
+        return { kind: 'skip', label: 'skip / te krap' }
+      }
+      if (rawA < SKIP_UNDER) {
+        const value = showMax(rawB)
+        return note ? { kind: 'point', value, note } : { kind: 'point', value }
+      }
+      if (rawB < SKIP_UNDER) {
+        const value = showMax(rawA)
+        return note ? { kind: 'point', value, note } : { kind: 'point', value }
+      }
+      const a = showMax(rawA)
+      const b = showMax(rawB)
       return note ? { kind: 'either', a, b, note } : { kind: 'either', a, b }
     }
   }

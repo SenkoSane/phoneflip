@@ -263,8 +263,14 @@ export function buyAdvice(input: {
   }
 
   const beginner = round5(sheet - BEGINNER_EXTRA)
-  const max = beginner < SHEET_SKIP ? null : beginner
-  const verdict: BuyVerdict = max == null ? 'skip' : beginner < sheet - 5 && beginner <= 70 ? 'tight' : 'ok'
+  // Dunne maar positieve sheet-marge → lage € tonen. Beginner-buffer mag niet tot skip forceren.
+  const max =
+    beginner >= SHEET_SKIP
+      ? Math.max(beginner, 5)
+      : sheet >= SHEET_SKIP
+        ? Math.max(round5(sheet), 5)
+        : null
+  const verdict: BuyVerdict = max == null ? 'skip' : beginner < sheet - 5 && max <= 70 ? 'tight' : 'ok'
   const finalVerdict: BuyVerdict = max == null ? 'skip' : difficulty === 'hard' ? 'tight' : verdict
 
   return {
