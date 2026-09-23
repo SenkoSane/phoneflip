@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { localeFor, useT } from '../i18n'
 import {
   MARKTWAARDE_UPDATED,
+  SCENARIO_EASY,
+  SCENARIO_SCREEN,
   defaultStorageFor,
   iphoneGroups,
   pickStorageRow,
@@ -419,27 +421,62 @@ function ModelCard({
         </Link>
       </div>
 
-      <div className="mt-5 min-w-0">
+      <div className="mt-5 min-w-0 space-y-5">
         <p className="pf-muted text-xs font-medium uppercase tracking-[0.12em]">
-          {t('mw.single')}
+          {t('mw.allScenarios')}
         </p>
-        <ScenarioList
-          scenarios={[...row.scenarios.filter((s) => s.defects.length === 1)].sort((a, b) => {
-            const rank = (id: string) =>
-              ({ accu: 0, laadpoort: 1, behuizing: 2, scherm: 3, camera: 4 })[id] ?? 9
-            return rank(a.id) - rank(b.id)
-          })}
+        <ScenarioGroup
+          title={t('mw.easy')}
+          hint={t('mw.easyHint')}
+          scenarios={row.scenarios.filter((s) => SCENARIO_EASY.has(s.id))}
           bestIds={bestIds}
+          order={['accu', 'laadpoort', 'behuizing']}
         />
-        <p className="pf-muted mt-5 text-xs font-medium uppercase tracking-[0.12em]">
-          {t('mw.combo')}
-        </p>
-        <ScenarioList
+        <ScenarioGroup
+          title={t('mw.screenGroup')}
+          hint={t('mw.screenHint')}
+          scenarios={row.scenarios.filter((s) => SCENARIO_SCREEN.has(s.id))}
+          bestIds={bestIds}
+          order={['scherm', 'camera']}
+        />
+        <ScenarioGroup
+          title={t('mw.combo')}
+          hint={t('mw.comboHint')}
           scenarios={row.scenarios.filter((s) => s.defects.length > 1)}
           bestIds={bestIds}
         />
       </div>
     </article>
+  )
+}
+
+function ScenarioGroup({
+  title,
+  hint,
+  scenarios,
+  bestIds,
+  order,
+}: {
+  title: string
+  hint: string
+  scenarios: BuyScenario[]
+  bestIds: Set<string>
+  order?: string[]
+}) {
+  const sorted = order
+    ? [...scenarios].sort((a, b) => {
+        const ia = order.indexOf(a.id)
+        const ib = order.indexOf(b.id)
+        return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib)
+      })
+    : scenarios
+  if (!sorted.length) return null
+  return (
+    <div className="min-w-0">
+      <p className="text-sm font-medium text-[var(--pf-fg)]">{title}</p>
+      <p className="pf-muted mt-0.5 text-xs leading-snug">{hint}</p>
+      <ScenarioList scenarios={sorted} bestIds={bestIds} />
+    </div>
   )
 }
 
@@ -457,7 +494,7 @@ function ScenarioList({
     skipTight: t('mw.skipTight'),
   }
   return (
-    <ul className="mt-1.5 min-w-0 divide-y divide-[var(--pf-border)]">
+    <ul className="mt-2.5 grid min-w-0 grid-cols-1 gap-2.5 sm:grid-cols-2">
       {scenarios.map((s) => {
         const cell = maxCell(s.buy, cellLabels)
         const isBest = bestIds.has(s.id)
@@ -465,8 +502,8 @@ function ScenarioList({
         return (
           <li
             key={s.id}
-            className={`flex min-h-11 min-w-0 items-center justify-between gap-3 py-2.5 ${
-              isBest ? 'rounded-lg bg-[var(--pf-accent-soft)] px-2.5' : ''
+            className={`flex min-h-11 min-w-0 items-center justify-between gap-3 rounded-lg px-3.5 py-3 ${
+              isBest ? 'bg-[var(--pf-accent-soft)]' : 'pf-surface-inset'
             }`}
           >
             <div className="min-w-0">

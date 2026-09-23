@@ -201,6 +201,7 @@ function toCell(sell: number, p: FPart, buffer: number, note?: string): MaxBuyCe
   }
 }
 
+/** Shown on Marktwaarde; BuyCoach can also compute any chip combo via buyForDefects. */
 const SCENARIO_DEFS: { id: string; label: string; defects: DefectId[] }[] = [
   { id: 'scherm', label: 'Alleen scherm', defects: ['scherm'] },
   { id: 'accu', label: 'Alleen accu', defects: ['accu'] },
@@ -209,6 +210,7 @@ const SCENARIO_DEFS: { id: string; label: string; defects: DefectId[] }[] = [
   { id: 'behuizing', label: 'Alleen behuizing', defects: ['behuizing'] },
   { id: 'scherm-accu', label: 'Scherm + accu', defects: ['scherm', 'accu'] },
   { id: 'scherm-huis', label: 'Scherm + behuizing', defects: ['scherm', 'behuizing'] },
+  { id: 'scherm-camera', label: 'Scherm + camera', defects: ['scherm', 'camera'] },
   { id: 'accu-poort', label: 'Accu + laadpoort', defects: ['accu', 'laadpoort'] },
   { id: 'accu-huis', label: 'Accu + behuizing', defects: ['accu', 'behuizing'] },
   {
@@ -218,7 +220,12 @@ const SCENARIO_DEFS: { id: string; label: string; defects: DefectId[] }[] = [
   },
   { id: 'poort-huis', label: 'Laadpoort + behuizing', defects: ['laadpoort', 'behuizing'] },
   { id: 'scherm-poort', label: 'Scherm + laadpoort', defects: ['scherm', 'laadpoort'] },
+  { id: 'camera-huis', label: 'Camera + behuizing', defects: ['camera', 'behuizing'] },
 ]
+
+/** UI groups on Marktwaarde: easy fixes vs screen/camera vs multi-defect. */
+export const SCENARIO_EASY = new Set(['accu', 'laadpoort', 'behuizing'])
+export const SCENARIO_SCREEN = new Set(['scherm', 'camera'])
 
 const SIMPLE_BEST = new Set<string>(['accu', 'laadpoort', 'behuizing'])
 
@@ -277,32 +284,45 @@ type Formula = {
   camera: FPart
 }
 
-function buildScenarios(strak: number, huis: number, f: Formula, buffer: number): BuyScenario[] {
-  const partOf = (d: DefectId): FPart => {
-    if (d === 'behuizing') return { k: 'zero' }
-    return f[d]
-  }
+/** Per model id — same parts formula for every storage SKU. */
+const FORMULA_BY_ID = new Map<string, Formula>()
 
+function partOf(f: Formula, d: DefectId): FPart {
+  if (d === 'behuizing') return { k: 'zero' }
+  return f[d]
+}
+
+function buyFromFormula(
+  strak: number,
+  huis: number,
+  f: Formula,
+  buffer: number,
+  defects: DefectId[],
+  note?: string,
+): MaxBuyCell {
+  const huisIn = defects.includes('behuizing')
+  const sell = huisIn ? huis : strak
+  const total = defects.map((d) => partOf(f, d)).reduce(mergeParts)
+  return toCell(sell, total, buffer, note)
+}
+
+function scenarioNote(defId: string, f: Formula): string | undefined {
+  if (defId === 'behuizing') return 'geen extra part'
+  if (defId === 'camera' && f.camera.k === 'n') return f.camera.note
+  if (defId === 'scherm' && f.scherm.k === 'band') return 'Fixje hq hoog; A+ laag'
+  if (defId === 'scherm' && f.scherm.k === 'either') return 'AM hoog; pulled orig. laag'
+  return undefined
+}
+
+function buildScenarios(strak: number, huis: number, f: Formula, buffer: number): BuyScenario[] {
   return SCENARIO_DEFS.map((def) => {
     const huisIn = def.defects.includes('behuizing')
-    const sell = huisIn ? huis : strak
-    const total = def.defects.map(partOf).reduce(mergeParts)
-    const extraNote =
-      def.id === 'behuizing'
-        ? 'geen extra part'
-        : def.id === 'camera' && f.camera.k === 'n'
-          ? f.camera.note
-          : def.id === 'scherm' && f.scherm.k === 'band'
-            ? 'Fixje hq hoog; A+ laag'
-            : def.id === 'scherm' && f.scherm.k === 'either'
-              ? 'AM hoog; pulled orig. laag'
-              : undefined
     return {
       id: def.id,
       label: def.label,
       defects: def.defects,
       huis: huisIn,
-      buy: toCell(sell, total, buffer, extraNote),
+      buy: buyFromFormula(strak, huis, f, buffer, def.defects, scenarioNote(def.id, f)),
     }
   })
 }
@@ -311,6 +331,7 @@ function phone(
   row: Omit<IphoneMarkt, 'scenarios' | 'bestBuy'> & { formula: Formula; buffer?: number },
 ): IphoneMarkt {
   const { formula, buffer = INKOOP_BUFFER, ...rest } = row
+  FORMULA_BY_ID.set(rest.id, formula)
   const scenarios = buildScenarios(
     rest.prive.rekenwaarde,
     rest.lichtHuis.rekenwaarde,
@@ -368,14 +389,27 @@ function defectKey(defects: DefectId[]): string {
   return [...defects].sort().join('|')
 }
 
-/** Exact scenario, or working-phone max (strak − buffer, geen parts). Unknown combo → skip. */
+/**
+ * Max buy for any defect set (BuyCoach chips).
+ * Known sheet scenarios keep their notes; any other combo uses the same sell − parts − buffer math.
+ * Empty defects = working phone (strak − buffer). Unknown parts (e.g. 17 camera) → unknown.
+ */
 export function buyForDefects(row: IphoneMarkt, defects: DefectId[]): MaxBuyCell {
   if (defects.length === 0) {
     return toCell(row.prive.rekenwaarde, { k: 'zero' }, modelBuffer(row.id))
   }
   const key = defectKey(defects)
   const found = row.scenarios.find((s) => defectKey(s.defects) === key)
-  return found?.buy ?? { kind: 'skip', label: 'skip / te krap' }
+  if (found) return found.buy
+  const f = FORMULA_BY_ID.get(row.id)
+  if (!f) return { kind: 'skip', label: 'skip / te krap' }
+  return buyFromFormula(
+    row.prive.rekenwaarde,
+    row.lichtHuis.rekenwaarde,
+    f,
+    modelBuffer(row.id),
+    defects,
+  )
 }
 
 export const IPHONES: IphoneMarkt[] = [
