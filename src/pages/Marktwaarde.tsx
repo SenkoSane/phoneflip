@@ -424,7 +424,11 @@ function ModelCard({
           {t('mw.single')}
         </p>
         <ScenarioList
-          scenarios={row.scenarios.filter((s) => s.defects.length === 1)}
+          scenarios={[...row.scenarios.filter((s) => s.defects.length === 1)].sort((a, b) => {
+            const rank = (id: string) =>
+              ({ accu: 0, laadpoort: 1, behuizing: 2, scherm: 3, camera: 4 })[id] ?? 9
+            return rank(a.id) - rank(b.id)
+          })}
           bestIds={bestIds}
         />
         <p className="pf-muted mt-5 text-xs font-medium uppercase tracking-[0.12em]">

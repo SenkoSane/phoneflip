@@ -12,8 +12,8 @@ import {
 import { jobIsClosed, jobMargin, jobPartsCost, phoneCost, phoneMargin } from './calc'
 import type { Phone, Quote, RepairJob } from '../types'
 
-/** Extra buffer on top of the cheat sheet — first-year flipper in NL. */
-export const BEGINNER_EXTRA = 15
+/** Extra buffer on top of the cheat sheet — first-year flipper in NL (tijd + verzending). */
+export const BEGINNER_EXTRA = 20
 
 export const DEFECTS: DefectId[] = ['scherm', 'accu', 'laadpoort', 'camera', 'behuizing']
 
